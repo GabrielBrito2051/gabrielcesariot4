@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../include/grafo.h"
+#include "../include/hashtable.h"
 
 typedef struct Aresta{
     char nome[48], ldir[24], lesq[24], destino[48];
@@ -18,16 +19,13 @@ typedef struct{
     int maxVertices;
     int qntdAtual;
     vertice* v;
+    Hashtable mapaIds;
 }grafo;
 
 int obter_indice(Grafo g, char* idBusca){
     grafo* var = (grafo*)g;
-    for(int i=0;i<var->qntdAtual;i++){
-        if(strcmp(var->v[i].idString, idBusca)==0){
-            return i;
-        }
-    }
-    return -1;
+    if(var==NULL || var->mapaIds==NULL) return -1;
+    return buscar_hashtable(var->mapaIds, idBusca);
 }
 
 aresta* nova_aresta(char* idDestino, double comprimento, double velocidadeMedia, char* ldir, char* lesq){
@@ -51,8 +49,11 @@ Grafo criar_grafo(int numVertices){
     g->maxVertices = numVertices;
     g->qntdAtual = 0;
     g->v = malloc(numVertices * sizeof(vertice));
+    g->mapaIds = criar_hashtable(numVertices * 2);
 
-    if(g->v==NULL){
+    if(g->v==NULL || g->mapaIds==NULL){
+        if(g->v) free(g->v);
+        if(g->mapaIds) destruir_hashtable(g->mapaIds);
         free(g);
         return NULL;
     }
@@ -73,7 +74,7 @@ void inserir_vertice(Grafo g, int idTexto, double x, double y){
         return;
     }
 
-    if(obter_indice(var, idTexto) != 1){
+    if(obter_indice(var, idTexto) != -1){
         return;
     }
 
@@ -83,6 +84,8 @@ void inserir_vertice(Grafo g, int idTexto, double x, double y){
     var->v[indice].x = x;
     var->v[indice].y = y;
     var->v[indice].inicio = NULL;
+
+    inserir_hashtable(var->mapaIds, idTexto, indice);
 
     var->qntdAtual++;
 }
@@ -125,8 +128,8 @@ void destruir_grafo(Grafo g){
             atual = prox;
         }
     }
-    if(var->v!=NULL){
-        free(var->v);
-    }
+
+    destruir_hashtable(var->mapaIds);
+    free(var->v);
     free(var);
 }
