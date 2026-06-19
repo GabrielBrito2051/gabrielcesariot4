@@ -14,14 +14,14 @@ Hashtable criar_hashtable(int capacidade);
 
 /// @brief Insere um elemento na hashtable
 /// @param h A hashtable
-/// @param chave A string do vertice que sera inserido
-/// @param valor O id do vertice
+/// @param chave A string do elemento que sera inserido
+/// @param valor O id do elemento
 void inserir_hashtable(Hashtable h, char* chave, int valor);
 
 /// @brief Faz a busca de um elemento na hashtable
 /// @param h A hashtable
-/// @param chave A string do vertice que sera buscado
-/// @return Retorna o id do vertice buscado
+/// @param chave A string do elemento que sera buscado
+/// @return Retorna o id do elemento buscado
 int buscar_hashtable(Hashtable h, char* chave);
 
 /// @brief Libera a memoria de uma hashtable

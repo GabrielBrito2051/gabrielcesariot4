@@ -9,7 +9,7 @@ typedef struct{
 }quadra;
 
 typedef struct{
-    char sw[8], fill[30], strk[30];
+    char sw[8], fill[32], strk[32];
 }estilo;
 
 Quadra criar_quadra(char* cep, double x, double y, double w, double h){
