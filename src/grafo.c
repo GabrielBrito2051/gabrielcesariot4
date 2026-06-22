@@ -167,7 +167,7 @@ void busca_menor_distancia(Grafo g, char* idOrigem, char* idDestino){
 }
 
 
-Grafo busca_menor_tempo(Grafo g, char* idOrigem, char* idDestino){
+void busca_menor_tempo(Grafo g, char* idOrigem, char* idDestino){
     if(g==NULL) return;
     grafo* var = (grafo*) g;
 
@@ -229,6 +229,26 @@ Grafo busca_menor_tempo(Grafo g, char* idOrigem, char* idDestino){
     free(antecessor);
     free(tempoAcumulado);
     free(visitado);
+}
+
+void alterar_velocidade_media(Grafo g, double x, double y, double w, double h, double vm){
+    if(g==NULL) return;
+    grafo* var = (grafo*) g;
+
+    for(int i=0;i<var->qntdAtual;i++){
+        vertice origem = var->v[i];
+        if(origem.x >= x && origem.x <= (x+w) && origem.y >= y && origem.y <= (y+h)){
+            aresta* atual = origem.inicio;
+            while(atual!=NULL){
+                int indice = atual->destino;
+                vertice destino = var->v[indice];
+                if(destino.x >= x && destino.x <= (x + w) && destino.y >= y && destino.y <= (y + h)){
+                    atual->vm = vm;
+                }
+                atual = atual->prox;
+            }
+        }
+    }
 }
 
 void destruir_grafo(Grafo g){

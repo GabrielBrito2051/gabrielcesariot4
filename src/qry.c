@@ -38,7 +38,8 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
             }
         }
         else if(strcmp(func, "mvm")==0){
-
+            sscanf(linhaQry, "%*s %lf %lf %lf %lf %lf", &vm, &x, &y, &w, &h);
+            alterar_velocidade_media(g, x, y, w, h, vm);
         }
         else if(strcmp(func, "regs")==0){
 

@@ -30,11 +30,26 @@ void inserir_vertice(Grafo g, int idTexto, double x, double y);
 /// @param nome O nome da rua
 void inserir_aresta(Grafo g, char* origem, char* destino, char* ldir, char*lesq, double comprimento, double velocidadeMedia, char* nome);
 
+/// @brief Calcula o caminho de menor distancia entre dois pontos
+/// @param g O grafo
+/// @param idOrigem Id do vertice de origem
+/// @param idDestino Id do vertice de destino
+void busca_menor_distancia(Grafo g, char* idOrigem, char* idDestino);
 
-//Grafo busca_menor_caminho(Grafo g);
+/// @brief Calcula o caminho de menor tempo entre dois pontos
+/// @param g O grafo
+/// @param idOrigem Id do vertice de origem
+/// @param idDestino Id do vertice de destino
+void busca_menor_tempo(Grafo g, char* idOrigem, char* idDestino);
 
-
-//Grafo busca_menor_tempo(Grafo g);
+/// @brief Altera as velocidades medias de todas as arestas dentro de uma bounding box
+/// @param g O grafo
+/// @param x Coordenada x da ancora da bounding box
+/// @param y Coordenada y da ancora da bounding box
+/// @param w Largura da bounding box
+/// @param h Altura da bounding box
+/// @param vm A nova velocidade media das arestas
+void alterar_velocidade_media(Grafo g, double x, double y, double w, double h, double vm);
 
 /// @brief Libera a memoria de um grafo
 /// @param g O grafo que sera destruido

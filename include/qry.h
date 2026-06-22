@@ -9,11 +9,14 @@
 
 */
 
-/// @brief 
-/// @param qry 
-/// @param txt 
-/// @param svgQry 
-/// @param g 
-void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g);
+/// @brief Faz a leitura do arquivo qry
+/// @param qry Ponteiro para o arquivo qry
+/// @param txt Ponteiro para o arquivo txt
+/// @param svgQry Ponteiro para o arquivo svg do qry
+/// @param g O grafo
+/// @param vetReg Vetor que armazena os registradores
+/// @param vetQuadras Vetor que armzena as quadras
+/// @param htQuadras Hashtable de quadras
+void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Quadra* vetQuadras, Hashtable htQuadras);
 
 #endif
