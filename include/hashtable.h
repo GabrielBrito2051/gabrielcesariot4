@@ -21,7 +21,7 @@ void inserir_hashtable(Hashtable h, char* chave, int valor);
 /// @brief Faz a busca de um elemento na hashtable
 /// @param h A hashtable
 /// @param chave A string do elemento que sera buscado
-/// @return Retorna o id do elemento buscado
+/// @return Retorna o id do elemento buscado. Caso nao encontre o elemento, retorna -1
 int buscar_hashtable(Hashtable h, char* chave);
 
 /// @brief Libera a memoria de uma hashtable

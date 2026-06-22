@@ -8,6 +8,10 @@ typedef void* Registrador;
 */
 
 /// @brief 
+/// @return 
+Registrador criar_registrador(char* cep, char face, int num, double x, double y);
+
+/// @brief 
 /// @param reg 
 /// @return 
 char* getCepRegistrador(Registrador reg);
@@ -56,5 +60,8 @@ void setXRegistrador(Registrador reg, double x);
 /// @param reg 
 /// @param y 
 void setYRegistrador(Registrador reg, double y);
+
+
+void destruir_registrador(Registrador reg);
 
 #endif

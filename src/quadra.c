@@ -43,6 +43,38 @@ double getHQuadra(Quadra q){
     return ((quadra*)q)->h;
 }
 
+double calculaXEndereco(Quadra q, char face, int num){
+    quadra* var = (quadra*) q;
+    double x = var->x;
+    if(face=='N'){
+        x = var->x + num;
+    }
+    else if(face=='S'){
+        x = var->x + num;
+    }
+    else if(face=='O' || face=='W'){
+        x = var->x + var->w;
+    }
+
+    return x;
+}
+
+double calculaYEndereco(Quadra q, char face, int num){
+    quadra* var = (quadra*) q;
+    double y = var->y;
+    if(face=='N'){
+        y = var->y + var->h;
+    }
+    else if(face=='L' || face=='E'){
+        y = var->y + num;
+    }
+    else if(face=='O' || face=='W'){
+        y = var->y + num;
+    }
+
+    return y;
+}
+
 void liberar_quadra(Quadra q){
     free((quadra*)q);
 }

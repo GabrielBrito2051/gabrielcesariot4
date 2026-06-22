@@ -42,6 +42,20 @@ double getWQuadra(Quadra q);
 /// @return Retorna a altura da quadra
 double getHQuadra(Quadra q);
 
+/// @brief Calcula a coordenada x de um endereco a partir da sua quadra, face e numero
+/// @param q A quadra
+/// @param face A face
+/// @param num O numero
+/// @return Retrona o valor da coordenada x do endereco
+double calculaXEndereco(Quadra q, char face, int num);
+
+/// @brief Calcula a coordenada y de um endereco a partir da sua quadra, face e endereco
+/// @param q A quadra
+/// @param face A face
+/// @param num O numero
+/// @return Retorna o valor da coordenada y do endereco
+double calculaYEndereco(Quadra q, char face, int num);
+
 /// @brief Libera a memoria de uma quadra
 /// @param q A quadra
 void liberar_quadra(Quadra q);

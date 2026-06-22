@@ -9,6 +9,18 @@ typedef struct{
     double x, y;
 }registrador;
 
+void criar_registrador(char* cep, char face, int num, double x, double y){
+    registrador* reg = malloc(sizeof(registrador));
+    
+    strcpy(reg->cep,cep);
+    reg->face = face;
+    reg->num = num;
+    reg->x = x;
+    reg->y = y;
+
+    return reg;
+}
+
 char* getCepRegistrador(Registrador reg){
     return ((registrador*)reg)->cep;
 }
@@ -47,4 +59,11 @@ void setXRegistrador(Registrador reg, double x){
 
 void setYRegistrador(Registrador reg, double y){
     ((registrador*)reg)->y = y;
+}
+
+void destruir_registrador(Registrador reg){
+    if(reg==NULL) return;
+    registrador* r = (registrador*) reg;
+
+    free(r);
 }
