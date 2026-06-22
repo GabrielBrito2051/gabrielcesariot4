@@ -6,7 +6,7 @@
 #include "../include/fila-prioridade.h"
 
 typedef struct Aresta{
-    char nome[48], ldir[24], lesq[24], destino[48];
+    char nome[48], ldir[48], lesq[48], destino[48];
     double cmp, vm;
     struct Aresta* prox;
 }aresta;

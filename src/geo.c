@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "../include/geo.h"
 #include "../include/hashtable.h"
 #include "../include/quadra.h"
 
@@ -16,7 +17,7 @@ int leNumeroQuadras(FILE* geo){
 }
 
 void leGeo(FILE* geo, Hashtable ht, FILE* svgGeo, Quadra* vetQuadras, Estilo ts){
-    char cep[12], sw[8], fill[32], strk[32], func[4];
+    char cep[48], sw[8], fill[32], strk[32], func[4];
     double x, y, w, h;
     char* linhaGeo = malloc(TAM_LINHA);
     int i=0;

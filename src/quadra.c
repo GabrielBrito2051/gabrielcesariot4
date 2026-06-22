@@ -4,7 +4,7 @@
 #include <string.h>
 
 typedef struct{
-    char cep[12];
+    char cep[48];
     double x, y, w, h;
 }quadra;
 
