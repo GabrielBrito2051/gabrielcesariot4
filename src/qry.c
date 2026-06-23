@@ -42,10 +42,12 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
             alterar_velocidade_media(g, x, y, w, h, vm);
         }
         else if(strcmp(func, "regs")==0){
-
+            sscanf(linhaQry, "%*s %lf", &vm);
+            int qntdComp = calcula_componentes_conexos(g, vm, svgQry);
+            imprime_numero_componentes(txt, qntdComp);
         }
         else if(strcmp(func, "exp")==0){
-
+            
         }
         else if(strcmp(func, "p?")==0){
 

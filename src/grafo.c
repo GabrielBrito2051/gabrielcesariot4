@@ -251,6 +251,69 @@ void alterar_velocidade_media(Grafo g, double x, double y, double w, double h, d
     }
 }
 
+int calcula_componentes_conexos(Grafo g, double velocidade, FILE* svg){
+    if(g==NULL) return -1;
+    grafo* var = (grafo*)g;
+
+    int n = var->qntdAtual;
+    int* visitado = calloc(n,sizeof(int));
+    int* fila = malloc(n*sizeof(int));
+    int qntdComp = 0;
+
+    char* cores[] = {"red", "cyan", "green", "orange", "purple",  "cyan", "magenta", "brown", "darkgreen", "teal"};
+    int totalCores = 10;
+
+    for(int i=0;i<n;i++){
+        if(!visitado[i]){
+            qntdComp++;
+
+            double min_x = DBL_MAX, max_x = -DBL_MAX, min_y = DBL_MAX, max_y = -DBL_MAX;
+            int inicio = 0;
+            int fim = 0;
+
+            fila[fim++] = i;
+            visitado[i] = 1;
+
+            while(inicio<fim){
+                int u = fila[inicio++];
+
+                double vx = var->v[u].x;
+                double vy = var->v[u].y;
+                if (vx < min_x) min_x = vx;
+                if (vx > max_x) max_x = vx;
+                if (vy < min_y) min_y = vy;
+                if (vy > max_y) max_y = vy;
+
+                aresta* rua = var->v[u].inicio;
+                while(rua!=NULL){
+                    if(rua->vm<velocidade){
+                        int v = rua->destino;
+                        if(!visitado[v]){
+                            visitado[v] = 1;
+                            fila[fim++] = v;
+                        }
+                    }
+                    rua = rua->prox;
+                }
+            }
+            if (min_x != DBL_MAX) {
+                double largura = max_x - min_x;
+                double altura = max_y - min_y;
+
+                if (largura == 0) largura = 5.0; 
+                if (altura == 0) altura = 5.0;
+
+                char* cor = cores[(qntdComp-1)%totalCores];
+                imprime_bounding_box(svg, min_x, min_y, largura, altura, cor);
+            }
+        }
+    }
+
+    free(fila);
+    free(visitado);
+    return qntdComp;
+}
+
 void destruir_grafo(Grafo g){
     if(g==NULL) return;
     grafo* var = (grafo*)g;

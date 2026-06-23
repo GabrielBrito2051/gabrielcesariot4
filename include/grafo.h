@@ -51,6 +51,13 @@ void busca_menor_tempo(Grafo g, char* idOrigem, char* idDestino);
 /// @param vm A nova velocidade media das arestas
 void alterar_velocidade_media(Grafo g, double x, double y, double w, double h, double vm);
 
+/// @brief Calcula os componentes conexos do grafo
+/// @param g O grafo
+/// @param velocidade A velocidade maxima dos componentes
+/// @param svg Ponteiro para o arquivo svg para imprimir a bounding box
+/// @return Retorna a quantidade de elementos conexos
+int calcula_componentes_conexos(Grafo g, double velocidade, FILE* svg);
+
 /// @brief Libera a memoria de um grafo
 /// @param g O grafo que sera destruido
 void destruir_grafo(Grafo g);
