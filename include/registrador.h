@@ -61,7 +61,8 @@ void setXRegistrador(Registrador reg, double x);
 /// @param y 
 void setYRegistrador(Registrador reg, double y);
 
-
+/// @brief 
+/// @param reg 
 void destruir_registrador(Registrador reg);
 
 #endif

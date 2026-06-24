@@ -314,6 +314,81 @@ int calcula_componentes_conexos(Grafo g, double velocidade, FILE* svg){
     return qntdComp;
 }
 
+void calcula_arvore_geradora_minima(Grafo g, double velocidade, FILE* svg){
+    if(g==NULL) return;
+    grafo* var = (grafo*) g;
+
+    int n = var->qntdAtual; 
+
+    double* chave = malloc(n*sizeof(double));
+    int* pai = malloc(n* sizeof(int));
+    int* contido = calloc(n,sizeof(int));
+
+    for(int i=0;i<n;i++){
+        chave[i] = DBL_MAX;
+        pai[i] = -1;
+    }
+    Fila f = criar_fila(n*4);
+
+    for(int i=0;i<n;i++){
+        if(contido[i]) continue;
+        chave[i] = 0.0;
+        inserir_fila(f, i, 0.0);
+
+        while(!fila_vazia(f)){
+            int u = remove_minimo(f);
+            if(contido[u]) continue;
+            contido[u] = 1;
+
+            aresta* rua = var->v[u].inicio;
+            while(rua!=NULL){
+                int v = rua->destino;
+                double peso = rua->vm;
+
+                if(!contido[v] && peso<chave[v]){
+                    chave[v] = peso;
+                    pai[v] = u;
+                    inserir_fila(f, v, peso);
+                }
+                rua = rua->prox;
+            }
+        }
+    }
+
+    for(int v = 0; v<n; v++){
+        int u = pai[v];
+        if(u!=-1){
+            aresta* rua = var->v[u].inicio;
+            while(rua!=NULL){
+                if(rua->destino==v){
+                    if(rua->vm<velocidade){
+                        rua->vm *= 1.5;
+                        imprime_aresta_exp(svg, var->v[u].x, var->v[u].y, var->v[v].x, var->v[v].y);
+                    }
+                    break;
+                }
+                rua = rua->prox;
+            }
+
+            rua = var->v[v].inicio;
+            while(rua!=NULL){
+                if(rua->destino==u){
+                    if(rua->vm<velocidade){
+                        rua->vm *= 1.5;
+                    }
+                    break;
+                }
+                rua = rua->prox;
+            }
+        }
+    }
+
+    destruir_fila(f);
+    free(chave);
+    free(pai);
+    free(contido);
+}
+
 void destruir_grafo(Grafo g){
     if(g==NULL) return;
     grafo* var = (grafo*)g;

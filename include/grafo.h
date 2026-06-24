@@ -55,8 +55,14 @@ void alterar_velocidade_media(Grafo g, double x, double y, double w, double h, d
 /// @param g O grafo
 /// @param velocidade A velocidade maxima dos componentes
 /// @param svg Ponteiro para o arquivo svg para imprimir a bounding box
-/// @return Retorna a quantidade de elementos conexos
+/// @return Retorna a quantidade de elementos conexos. Retorna -1 em caso de erro
 int calcula_componentes_conexos(Grafo g, double velocidade, FILE* svg);
+
+/// @brief Calcula a arvore geradora minima, seleciona as arestas com menor velocidade media e aumenta sua velocidade em 50%
+/// @param g O grafo
+/// @param velocidade A velocidade minima
+/// @param svg Ponteiro para o arquivo svg para imprimir as arestaas que terao sua velocidade media aumentada
+void calcula_arvore_geradora_minima(Grafo g, double velocidade, FILE* svg);
 
 /// @brief Libera a memoria de um grafo
 /// @param g O grafo que sera destruido

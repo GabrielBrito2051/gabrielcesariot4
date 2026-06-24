@@ -10,13 +10,13 @@
 #define TAM_LINHA 256
 
 void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Quadra* vetQuadras, Hashtable htQuadras){
-    char func[8], reg[4], cep[48], face, id[48];
+    char func[8], reg[4], cep[48], face, id[48], reg2[4], cc[48], cr[48];
     int num;
     double x, y, w, h, vm;
     char* linhaQry = malloc(TAM_LINHA);
     Hashtable htRegs = criar_hashtable(11);
     Registrador regist;
-    int i=0, indice;
+    int i=0, indice, indice2;
     while(fgets(linhaQry, TAM_LINHA, qry)!=NULL){
         sscanf(linhaQry, "%s", func);
         if(strcmp(func, "@o?")==0){
@@ -47,10 +47,13 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
             imprime_numero_componentes(txt, qntdComp);
         }
         else if(strcmp(func, "exp")==0){
-            
+            sscanf(linhaQry, "%*s %lf", &vm);
+            calcula_arvore_geradora_minima(g, vm, svgQry);
         }
         else if(strcmp(func, "p?")==0){
-
+            sscanf(linhaQry, "%*s %s %s %s %s", reg, reg2, cc, cr);
+            indice = buscar_hashtable(htRegs, reg);
+            indice2 = buscar_hashtable(htRegs, reg2);
         }else{
             printf("Comando nao identificado!");
         }
