@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <float.h>
+#include <math.h>
 #include "../include/grafo.h"
 #include "../include/hashtable.h"
 #include "../include/fila-prioridade.h"
@@ -108,22 +109,14 @@ void inserir_aresta(Grafo g, char* origem, char* destino, char* ldir, char*lesq,
     var->v[idOrigem].inicio = nova;
 }
 
-void busca_menor_distancia(Grafo g, char* idOrigem, char* idDestino){
+void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg){
     if(g==NULL) return;
     grafo* var = (grafo*) g;
-
-    int origem = obter_indice(var, idOrigem);
-    int destino = obter_indice(var,idDestino);
-
-    if(origem==-1 || destino==-1){
-        printf("Erro ao buscar o id de oigem ou id de destino");
-        return;
-    }
 
     int n = var->qntdAtual;
     float* distancia = malloc(n*sizeof(float));
     int* antecessor = malloc(n*sizeof(int));
-    int* visitado = calloc(n*sizeof(int));
+    int* visitado = calloc(n,sizeof(int));
 
     for(int i=0;i<n;i++){
         distancia[i] = FLT_MAX;
@@ -150,14 +143,21 @@ void busca_menor_distancia(Grafo g, char* idOrigem, char* idDestino){
                 antecessor[v] = u;
                 inserir_fila(f, v, novaDistancia);
             }
-            rua->prox;
+            rua = rua->prox;
         }
     }
 
     if(distancia[destino]==FLT_MAX){
-        printf("Nao foi encontrada uma rota entre %s e %s\n", idOrigem, idDestino);
+        printf("Nao foi encontrada uma rota\n");
     }else{
-        printf("Menor distancia:\nOrigem: %s\t Destino:%s\nDistancia total:%.2f km\n", idOrigem, idDestino, distancia[destino]);
+        printf("Menor distancia:%.2f km\n",distancia[destino]);
+
+        int atual = destino;
+        while(antecessor[atual]!=-1){
+            int ant = antecessor[atual];
+            desenha_aresta_svg(svg, var->v[ant].x,var->v[ant].y, var->v[atual].x, var->v[atual].y);
+            atual = ant;    
+        }
     }
 
     destruir_fila(f);
@@ -166,24 +166,15 @@ void busca_menor_distancia(Grafo g, char* idOrigem, char* idDestino){
     free(visitado);
 }
 
-
-void busca_menor_tempo(Grafo g, char* idOrigem, char* idDestino){
+void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg){
     if(g==NULL) return;
     grafo* var = (grafo*) g;
-
-    int origem = obter_indice(var, idOrigem);
-    int destino = obter_indice(var, idDestino);
-
-    if(origem == -1 || destino == -1){
-        printf("Erro ao o id de origem ou de destino");
-        return;
-    }
 
     int n = var->qntdAtual;
 
     float* tempoAcumulado = malloc(n*sizeof(float));
     int* antecessor = malloc(n*sizeof(int));
-    int* visitado = calloc(n*sizeof(int));
+    int* visitado = calloc(n,sizeof(int));
 
     for(int i=0;i<n;i++){
         tempoAcumulado[i] = FLT_MAX;
@@ -217,12 +208,17 @@ void busca_menor_tempo(Grafo g, char* idOrigem, char* idDestino){
         }
     }
     if(tempoAcumulado[destino] = FLT_MAX){
-        printf("Nao foi encontrado uma rota de %s ate %s", idOrigem, idDestino);
+        printf("Nao foi encontrado uma rota");
     }else{
-        printf("Rota mais rapida:\n");
-        printf("Origem:%s\tDestino:%s\n", idOrigem, idDestino);
+        printf("Rota mais rapida: %.1f minutos\n");
         float minutos = tempoAcumulado[destino] * 60.0;
-        printf("Tempo total:%.1f minutos", minutos);
+
+        int atual = destino;
+        while(antecessor[atual]!=-1){
+            int ant = antecessor[atual];
+            desenha_aresta_svg(svg, var->v[ant].x,var->v[ant].y, var->v[atual].x, var->v[atual].y);
+            atual = ant;    
+        }
     }
 
     destruir_fila(f);
@@ -387,6 +383,25 @@ void calcula_arvore_geradora_minima(Grafo g, double velocidade, FILE* svg){
     free(chave);
     free(pai);
     free(contido);
+}
+
+int encontra_vertice_mais_proximo(Grafo g, double x, double y){
+    if(g==NULL) return -1;
+    grafo* var = (grafo*) g;
+
+    int maisProximo = -1;
+    double menorDist = DBL_MAX;
+
+    for(int i=0;i<var->qntdAtual;i++){
+        double dx = var->v[i].x -x;
+        double dy = var->v[i].y - y;
+        double dist = dx * dx + dy * dy;
+        if(dist<menorDist){
+            menorDist = dist;
+            maisProximo = i;
+        }
+    }
+    return maisProximo;
 }
 
 void destruir_grafo(Grafo g){

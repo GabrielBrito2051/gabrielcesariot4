@@ -32,15 +32,19 @@ void inserir_aresta(Grafo g, char* origem, char* destino, char* ldir, char*lesq,
 
 /// @brief Calcula o caminho de menor distancia entre dois pontos
 /// @param g O grafo
-/// @param idOrigem Id do vertice de origem
-/// @param idDestino Id do vertice de destino
-void busca_menor_distancia(Grafo g, char* idOrigem, char* idDestino);
+/// @param origem Posicao do vertice de origem na losta de vertices do grafo
+/// @param destino Posicao do vertice de destino na lista de vertices do grafo
+/// @param svg Ponteiro para o arquivo svg que sera impresso o percurso
+/// @param txt Ponteiro para o arquivo com as intrucoes do percurso
+void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg, FILE* txt);
 
 /// @brief Calcula o caminho de menor tempo entre dois pontos
 /// @param g O grafo
-/// @param idOrigem Id do vertice de origem
-/// @param idDestino Id do vertice de destino
-void busca_menor_tempo(Grafo g, char* idOrigem, char* idDestino);
+/// @param origem Posicao do vertice de origem na lista de vertices do grafo
+/// @param destino Posicao do vertice de destino na lista de vertices do grafo
+/// @param svg Ponteiro para o arquivo svg que sera impresso o percurso
+/// @param txt Ponteiro para o arquivo com as intrucoes do percurso
+void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg, FILE* txt);
 
 /// @brief Altera as velocidades medias de todas as arestas dentro de uma bounding box
 /// @param g O grafo
@@ -63,6 +67,13 @@ int calcula_componentes_conexos(Grafo g, double velocidade, FILE* svg);
 /// @param velocidade A velocidade minima
 /// @param svg Ponteiro para o arquivo svg para imprimir as arestaas que terao sua velocidade media aumentada
 void calcula_arvore_geradora_minima(Grafo g, double velocidade, FILE* svg);
+
+/// @brief Encontra o vertice mais proximo de uma coordenada qualquer
+/// @param g O grafo
+/// @param x A coordenada x
+/// @param y A coordenada y
+/// @return Retorna o id numerico do vertice
+int encontra_vertice_mais_proximo(Grafo g, double x, double y);
 
 /// @brief Libera a memoria de um grafo
 /// @param g O grafo que sera destruido

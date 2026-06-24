@@ -54,6 +54,10 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
             sscanf(linhaQry, "%*s %s %s %s %s", reg, reg2, cc, cr);
             indice = buscar_hashtable(htRegs, reg);
             indice2 = buscar_hashtable(htRegs, reg2);
+            int origem = encontra_vertice_mais_proximo(g,getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]));
+            int destino = encontra_vertice_mais_proximo(g, getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
+            busca_menor_distancia(g, origem, destino, svgQry, txt);
+            busca_menor_tempo(g, origem, destino, svgQry, txt);
         }else{
             printf("Comando nao identificado!");
         }
