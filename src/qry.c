@@ -6,6 +6,8 @@
 #include "../include/grafo.h"
 #include "../include/registrador.h"
 #include "../include/hashtable.h"
+#include "../include/svg.h"
+#include "../include/txt.h"
 
 #define TAM_LINHA 256
 
@@ -36,6 +38,7 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
                 setXRegistrador(regist, x);
                 setYRegistrador(regist, y);
             }
+            insere_registrador_qry();
         }
         else if(strcmp(func, "mvm")==0){
             sscanf(linhaQry, "%*s %lf %lf %lf %lf %lf", &vm, &x, &y, &w, &h);

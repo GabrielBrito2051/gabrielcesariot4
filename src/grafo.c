@@ -5,6 +5,8 @@
 #include "../include/grafo.h"
 #include "../include/hashtable.h"
 #include "../include/fila-prioridade.h"
+#include "../include/svg.h"
+#include "../include/txt.h"
 
 typedef struct Aresta{
     char nome[48], ldir[48], lesq[48], destino[48];
@@ -109,7 +111,7 @@ void inserir_aresta(Grafo g, char* origem, char* destino, char* ldir, char*lesq,
     var->v[idOrigem].inicio = nova;
 }
 
-void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg){
+void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg, char* cc){
     if(g==NULL) return;
     grafo* var = (grafo*) g;
 
@@ -155,7 +157,7 @@ void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg){
         int atual = destino;
         while(antecessor[atual]!=-1){
             int ant = antecessor[atual];
-            desenha_aresta_svg(svg, var->v[ant].x,var->v[ant].y, var->v[atual].x, var->v[atual].y);
+            insere_aresta_svg(svg, var->v[ant].x,var->v[ant].y, var->v[atual].x, var->v[atual].y, cc);
             atual = ant;    
         }
     }
@@ -166,7 +168,7 @@ void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg){
     free(visitado);
 }
 
-void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg){
+void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg, char* cr){
     if(g==NULL) return;
     grafo* var = (grafo*) g;
 
@@ -216,7 +218,7 @@ void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg){
         int atual = destino;
         while(antecessor[atual]!=-1){
             int ant = antecessor[atual];
-            desenha_aresta_svg(svg, var->v[ant].x,var->v[ant].y, var->v[atual].x, var->v[atual].y);
+            insere_aresta_svg(svg, var->v[ant].x,var->v[ant].y, var->v[atual].x, var->v[atual].y, cr);
             atual = ant;    
         }
     }
@@ -300,7 +302,7 @@ int calcula_componentes_conexos(Grafo g, double velocidade, FILE* svg){
                 if (altura == 0) altura = 5.0;
 
                 char* cor = cores[(qntdComp-1)%totalCores];
-                imprime_bounding_box(svg, min_x, min_y, largura, altura, cor);
+                insere_bounding_box(svg, min_x, min_y, largura, altura, cor);
             }
         }
     }
@@ -359,7 +361,7 @@ void calcula_arvore_geradora_minima(Grafo g, double velocidade, FILE* svg){
                 if(rua->destino==v){
                     if(rua->vm<velocidade){
                         rua->vm *= 1.5;
-                        imprime_aresta_exp(svg, var->v[u].x, var->v[u].y, var->v[v].x, var->v[v].y);
+                        insere_aresta_svg(svg, var->v[u].x, var->v[u].y, var->v[v].x, var->v[v].y, "red");
                     }
                     break;
                 }

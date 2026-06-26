@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include "../include/quadra.h"
 #include "../include/grafo.h"
+#include "../include/registrador.h"
+#include "../include/hashtable.h"
 
 /*
 
