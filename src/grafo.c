@@ -45,6 +45,17 @@ aresta* nova_aresta(char* idDestino, double comprimento, double velocidadeMedia,
     return novo;
 }
 
+char* buscar_nome_rua(grafo* g, int origem, int destino){
+    aresta* rua = g->v[origem].inicio;
+    while(rua!=NULL){
+        if(rua->destino==destino){
+            return rua->nome;
+        }
+        rua = rua->prox;
+    }
+    return "Rua sem nome";
+}
+
 Grafo criar_grafo(int numVertices){
     grafo* g = malloc(sizeof(grafo));
     if(g==NULL){
@@ -111,7 +122,7 @@ void inserir_aresta(Grafo g, char* origem, char* destino, char* ldir, char*lesq,
     var->v[idOrigem].inicio = nova;
 }
 
-void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg, char* cc){
+void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg, char* cc, FILE* txt){
     if(g==NULL) return;
     grafo* var = (grafo*) g;
 
@@ -150,16 +161,49 @@ void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg, char* cc
     }
 
     if(distancia[destino]==FLT_MAX){
-        printf("Nao foi encontrada uma rota\n");
+        fprintf(txt,"Nao foi encontrada uma rota\n");
     }else{
-        printf("Menor distancia:%.2f km\n",distancia[destino]);
+        fprintf(txt,"Rota de menor distancia encontrada! Instrucoes:\n");
 
+        int* aux = malloc(n*sizeof(int));
+        int cont = 0;
         int atual = destino;
+        aux[cont++] = atual;
+
         while(antecessor[atual]!=-1){
             int ant = antecessor[atual];
             insere_aresta_svg(svg, var->v[ant].x,var->v[ant].y, var->v[atual].x, var->v[atual].y, cc);
+            aux[cont++] = ant;
             atual = ant;    
         }
+
+        int* caminho = malloc(cont* sizeof(int));
+        for(int i=0;i<cont;i++){
+            caminho[i] = aux[cont-1-i];
+        }
+
+        char* rua_inicial = buscar_nome_rua(var, caminho[0], caminho[1]);
+        fprintf(txt, "Siga pela rua %s", rua_inicial);
+        for(int i=0;i<cont-2;i++){
+            int a = caminho[i], b = caminho[i+1], c = caminho[i+2];
+            double xa = var->v[a].x, ya = var->v[a].y;
+            double xb = var->v[b].x, yb = var->v[b].y;
+            double xc = var->v[c].x, yc = var->v[c].y;
+            double cruzamento = (xb-xa)*(yc - yb) - (yb - ya) * (xc - xb);
+
+            char* proxima_rua = buscar_nome_rua(var, b, c);
+            if(cruzamento>0.1){
+                print_direcao(txt, "direita", proxima_rua);
+            }
+            else if(cruzamento<-0.1){
+                print_direcao(txt, "esquerda", proxima_rua);
+            }else{
+                fprintf(txt, "Siga em frente na rua %s\n", proxima_rua);
+            }
+        }
+        fprintf(txt, "Voce chegou ao seu destino!\tDistancia total:%lf km\n\n",distancia[destino]);
+        free(aux);
+        free(caminho);
     }
 
     destruir_fila(f);
@@ -168,7 +212,7 @@ void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg, char* cc
     free(visitado);
 }
 
-void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg, char* cr){
+void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg, char* cr,FILE* txt){
     if(g==NULL) return;
     grafo* var = (grafo*) g;
 
@@ -210,17 +254,50 @@ void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg, char* cr){
         }
     }
     if(tempoAcumulado[destino] = FLT_MAX){
-        printf("Nao foi encontrado uma rota");
+        printf("Nao foi encontrado uma rota\n");
     }else{
-        printf("Rota mais rapida: %.1f minutos\n");
+        printf("Rota de menor tempo encontrada! Instrucoes:\n");
         float minutos = tempoAcumulado[destino] * 60.0;
 
+        int* aux = malloc(n*sizeof(int));
+        int cont = 0;
         int atual = destino;
+        aux[cont++] = atual;
+
         while(antecessor[atual]!=-1){
             int ant = antecessor[atual];
             insere_aresta_svg(svg, var->v[ant].x,var->v[ant].y, var->v[atual].x, var->v[atual].y, cr);
+            aux[cont++] = ant;
             atual = ant;    
         }
+
+        int* caminho = malloc(cont* sizeof(int));
+        for(int i=0;i<cont;i++){
+            caminho[i] = aux[cont-1-i];
+        }
+
+        char* rua_inicial = buscar_nome_rua(var, caminho[0], caminho[1]);
+        fprintf(txt, "Siga pela rua %s", rua_inicial);
+        for(int i=0;i<cont-2;i++){
+            int a = caminho[i], b = caminho[i+1], c = caminho[i+2];
+            double xa = var->v[a].x, ya = var->v[a].y;
+            double xb = var->v[b].x, yb = var->v[b].y;
+            double xc = var->v[c].x, yc = var->v[c].y;
+            double cruzamento = (xb-xa)*(yc - yb) - (yb - ya) * (xc - xb);
+
+            char* proxima_rua = buscar_nome_rua(var, b, c);
+            if(cruzamento>0.1){
+                print_direcao(txt, "direita", proxima_rua);
+            }
+            else if(cruzamento<-0.1){
+                print_direcao(txt, "esquerda", proxima_rua);
+            }else{
+                fprintf(txt, "Siga em frente na rua %s\n", proxima_rua);
+            }
+        }
+        fprintf(txt, "Voce chegou ao seu destino!\tTempo total:%.1lf minutos\n\n",tempoAcumulado[destino]);
+        free(aux);
+        free(caminho);
     }
 
     destruir_fila(f);

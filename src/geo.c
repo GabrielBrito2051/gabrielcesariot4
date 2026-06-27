@@ -3,6 +3,7 @@
 #include "../include/geo.h"
 #include "../include/hashtable.h"
 #include "../include/quadra.h"
+#include "../include/svg.h"
 
 #define TAM_LINHA 256
 
@@ -29,7 +30,7 @@ void leGeo(FILE* geo, Hashtable ht, FILE* svgGeo, Quadra* vetQuadras, Estilo ts)
             vetQuadras[i] = q;
             inserir_hashtable(ht, cep, i);
             i++;
-            //insere_quadra_svg
+            insere_quadra_svg(svgGeo, 1, ts);
         }else if(strcmp(func, "cq")==0){
             sscanf(linhaGeo,"%*s %s %s %s", sw, fill, strk);
             setSw(ts, sw);

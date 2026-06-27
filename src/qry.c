@@ -29,16 +29,17 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
             if(buscar_hashtable(htRegs, reg)<0){
                 regist = criar_registrador(cep, face, num, x, y);
                 inserir_hashtable(htRegs, reg, i);
+                indice = i;
                 i++;
             }else{
-                regist = buscar_hashtable(htRegs, reg);
-                setCepRegistrador(regist, cep);
-                setFaceRegistrador(regist, face);
-                setNumRegistrador(regist, num);
-                setXRegistrador(regist, x);
-                setYRegistrador(regist, y);
+                indice = buscar_hashtable(htRegs, reg);
+                setCepRegistrador(vetReg[indice], cep);
+                setFaceRegistrador(vetReg[indice], face);
+                setNumRegistrador(vetReg[indice], num);
+                setXRegistrador(vetReg[indice], x);
+                setYRegistrador(vetReg[indice], y);
             }
-            insere_registrador_qry();
+            print_coordenadas_registrador(txt, x, y, indice);
         }
         else if(strcmp(func, "mvm")==0){
             sscanf(linhaQry, "%*s %lf %lf %lf %lf %lf", &vm, &x, &y, &w, &h);
@@ -47,7 +48,7 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
         else if(strcmp(func, "regs")==0){
             sscanf(linhaQry, "%*s %lf", &vm);
             int qntdComp = calcula_componentes_conexos(g, vm, svgQry);
-            imprime_numero_componentes(txt, qntdComp);
+            print_numero_componentes(txt, qntdComp);
         }
         else if(strcmp(func, "exp")==0){
             sscanf(linhaQry, "%*s %lf", &vm);
