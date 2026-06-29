@@ -8,6 +8,11 @@ typedef void* Registrador;
 */
 
 /// @brief 
+/// @param cep 
+/// @param face 
+/// @param num 
+/// @param x 
+/// @param y 
 /// @return 
 Registrador criar_registrador(char* cep, char face, int num, double x, double y);
 
@@ -19,7 +24,7 @@ char* getCepRegistrador(Registrador reg);
 /// @brief 
 /// @param reg 
 /// @return 
-char* getFaceRegistrador(Registrador reg);
+char getFaceRegistrador(Registrador reg);
 
 /// @brief 
 /// @param reg 

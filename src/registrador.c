@@ -9,7 +9,7 @@ typedef struct{
     double x, y;
 }registrador;
 
-void criar_registrador(char* cep, char face, int num, double x, double y){
+Registrador criar_registrador(char* cep, char face, int num, double x, double y){
     registrador* reg = malloc(sizeof(registrador));
     
     strcpy(reg->cep,cep);
@@ -25,7 +25,7 @@ char* getCepRegistrador(Registrador reg){
     return ((registrador*)reg)->cep;
 }
 
-char* getFaceRegistrador(Registrador reg){
+char getFaceRegistrador(Registrador reg){
     return ((registrador*)reg)->face;
 }
 

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "../include/geo.h"
 #include "../include/hashtable.h"
 #include "../include/quadra.h"
@@ -15,9 +16,11 @@ int leNumeroQuadras(FILE* geo){
         sscanf(linhaGeo, "%s", func);
         if(strcmp(func, "q")==0) nQuadras++;
     }
+
+    return nQuadras;
 }
 
-void leGeo(FILE* geo, Hashtable ht, FILE* svgGeo, Quadra* vetQuadras, Estilo ts){
+void leGeo(FILE* geo, Hashtable ht, FILE* svgGeo, Quadra* vetQuadras, Estilo ts, int* max_x, int* max_y){
     char cep[48], sw[8], fill[32], strk[32], func[4];
     double x, y, w, h;
     char* linhaGeo = malloc(TAM_LINHA);
@@ -30,7 +33,9 @@ void leGeo(FILE* geo, Hashtable ht, FILE* svgGeo, Quadra* vetQuadras, Estilo ts)
             vetQuadras[i] = q;
             inserir_hashtable(ht, cep, i);
             i++;
-            insere_quadra_svg(svgGeo, 1, ts);
+            insere_quadra_svg(svgGeo, q, ts);
+            if(x + w > *max_x) *max_x = x+w;
+            if(y + h > *max_y) *max_y = y+h;
         }else if(strcmp(func, "cq")==0){
             sscanf(linhaGeo,"%*s %s %s %s", sw, fill, strk);
             setSw(ts, sw);

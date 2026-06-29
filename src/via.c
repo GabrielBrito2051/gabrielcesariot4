@@ -6,10 +6,10 @@
 
 #define TAM_LINHA 256
 
-Grafo leVia(FILE* via, FILE* svgGeo){
+Grafo leVia(FILE* via){
     Grafo g;
     int nv;
-    char id[48], ldir[24], lesq[24], destino[48], func[4], i[24], j[24];
+    char id[48], ldir[24], lesq[24], func[4], i[48], j[48];
     double x, y, cmp, vm;
     char* linhaVia = malloc(TAM_LINHA);
     while(fgets(linhaVia, TAM_LINHA, via)!=NULL){
@@ -23,8 +23,9 @@ Grafo leVia(FILE* via, FILE* svgGeo){
             inserir_vertice(g, id, x, y);
         }
         else if(strcmp(func, "e")==0){
-            sscanf(linhaVia, "%*s %lf %lf %s %s %lf %lf %s", i, j, ldir, lesq, &cmp, &vm, id);
+            sscanf(linhaVia, "%*s %s %s %s %s %lf %lf %s", i, j, ldir, lesq, &cmp, &vm, id);
             inserir_aresta(g, i, j, ldir, lesq, cmp, vm, id);
+            inserir_aresta(g, j, i, ldir,lesq, cmp, vm, id);
         }else{
             printf("Comando nao identificado");
         }

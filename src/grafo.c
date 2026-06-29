@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <float.h>
 #include <math.h>
 #include "../include/grafo.h"
@@ -33,13 +34,14 @@ int obter_indice(Grafo g, char* idBusca){
     return buscar_hashtable(var->mapaIds, idBusca);
 }
 
-aresta* nova_aresta(char* idDestino, double comprimento, double velocidadeMedia, char* ldir, char* lesq){
+aresta* nova_aresta(char* idDestino, double comprimento, double velocidadeMedia, char* ldir, char* lesq, char* nome){
     aresta* novo = malloc(sizeof(aresta));
 
     strcpy(novo->destino,idDestino);
     novo->cmp = comprimento;
     novo->vm = velocidadeMedia;
-    strcpy(novo-ldir, ldir);
+    strcpy(novo->nome, nome);
+    strcpy(novo->ldir, ldir);
     strcpy(novo->lesq,lesq);
 
     return novo;
@@ -47,8 +49,10 @@ aresta* nova_aresta(char* idDestino, double comprimento, double velocidadeMedia,
 
 char* buscar_nome_rua(grafo* g, int origem, int destino){
     aresta* rua = g->v[origem].inicio;
+    int destinoRua;
     while(rua!=NULL){
-        if(rua->destino==destino){
+        destinoRua = buscar_hashtable(g->mapaIds, rua->destino);
+        if(destinoRua==destino){
             return rua->nome;
         }
         rua = rua->prox;
@@ -80,11 +84,12 @@ Grafo criar_grafo(int numVertices){
         g->v[i].x = 0;
         g->v[i].y = 0;
 
-        return g;
     }
+
+    return g;
 }
 
-void inserir_vertice(Grafo g, int idTexto, double x, double y){
+void inserir_vertice(Grafo g, char* idTexto, double x, double y){
     grafo* var = (grafo*)g;
     if(var==NULL || var->qntdAtual >= var->maxVertices){
         return;
@@ -115,7 +120,7 @@ void inserir_aresta(Grafo g, char* origem, char* destino, char* ldir, char*lesq,
 
     if(idOrigem == -1 || idDestino == -1) return;
 
-    aresta* nova = nova_aresta(idDestino, comprimento, velocidadeMedia, ldir, lesq);
+    aresta* nova = nova_aresta(destino, comprimento, velocidadeMedia, ldir, lesq, nome);
     if(nova==NULL) return;
 
     nova->prox = var->v[idOrigem].inicio;
@@ -148,7 +153,7 @@ void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg, char* cc
 
         aresta* rua = var->v[u].inicio;
         while(rua!=NULL){
-            int v = rua->destino;
+            int v = buscar_hashtable(var->mapaIds, rua->destino);
             float novaDistancia = distancia[u] + rua->cmp;
 
             if(!visitado[v] && novaDistancia < distancia[v]){
@@ -240,7 +245,7 @@ void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg, char* cr,FIL
 
         aresta* rua = var->v[u].inicio;
         while(rua!=NULL){
-            int v = rua->destino;
+            int v = buscar_hashtable(var->mapaIds, rua->destino);
 
             float tempo = rua->cmp / rua->vm;
             float tempoTotal = tempoAcumulado[u] + tempo;
@@ -253,7 +258,7 @@ void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg, char* cr,FIL
             rua = rua->prox;
         }
     }
-    if(tempoAcumulado[destino] = FLT_MAX){
+    if(tempoAcumulado[destino] == FLT_MAX){
         printf("Nao foi encontrado uma rota\n");
     }else{
         printf("Rota de menor tempo encontrada! Instrucoes:\n");
@@ -295,7 +300,7 @@ void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg, char* cr,FIL
                 fprintf(txt, "Siga em frente na rua %s\n", proxima_rua);
             }
         }
-        fprintf(txt, "Voce chegou ao seu destino!\tTempo total:%.1lf minutos\n\n",tempoAcumulado[destino]);
+        fprintf(txt, "Voce chegou ao seu destino!\tTempo total:%.1lf minutos\n\n",minutos);
         free(aux);
         free(caminho);
     }
@@ -315,7 +320,7 @@ void alterar_velocidade_media(Grafo g, double x, double y, double w, double h, d
         if(origem.x >= x && origem.x <= (x+w) && origem.y >= y && origem.y <= (y+h)){
             aresta* atual = origem.inicio;
             while(atual!=NULL){
-                int indice = atual->destino;
+                int indice = buscar_hashtable(var->mapaIds, atual->destino);
                 vertice destino = var->v[indice];
                 if(destino.x >= x && destino.x <= (x + w) && destino.y >= y && destino.y <= (y + h)){
                     atual->vm = vm;
@@ -362,7 +367,7 @@ int calcula_componentes_conexos(Grafo g, double velocidade, FILE* svg){
                 aresta* rua = var->v[u].inicio;
                 while(rua!=NULL){
                     if(rua->vm<velocidade){
-                        int v = rua->destino;
+                        int v = buscar_hashtable(var->mapaIds, rua->destino);
                         if(!visitado[v]){
                             visitado[v] = 1;
                             fila[fim++] = v;
@@ -417,7 +422,7 @@ void calcula_arvore_geradora_minima(Grafo g, double velocidade, FILE* svg){
 
             aresta* rua = var->v[u].inicio;
             while(rua!=NULL){
-                int v = rua->destino;
+                int v = buscar_hashtable(var->mapaIds, rua->destino);
                 double peso = rua->vm;
 
                 if(!contido[v] && peso<chave[v]){
@@ -435,7 +440,7 @@ void calcula_arvore_geradora_minima(Grafo g, double velocidade, FILE* svg){
         if(u!=-1){
             aresta* rua = var->v[u].inicio;
             while(rua!=NULL){
-                if(rua->destino==v){
+                if(buscar_hashtable(var->mapaIds, rua->destino)==v){
                     if(rua->vm<velocidade){
                         rua->vm *= 1.5;
                         insere_aresta_svg(svg, var->v[u].x, var->v[u].y, var->v[v].x, var->v[v].y, "red");
@@ -447,7 +452,7 @@ void calcula_arvore_geradora_minima(Grafo g, double velocidade, FILE* svg){
 
             rua = var->v[v].inicio;
             while(rua!=NULL){
-                if(rua->destino==u){
+                if(buscar_hashtable(var->mapaIds, rua->destino)==u){
                     if(rua->vm<velocidade){
                         rua->vm *= 1.5;
                     }

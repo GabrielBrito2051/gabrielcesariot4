@@ -14,10 +14,10 @@ Grafo criar_grafo(int numVertices);
 
 /// @brief Insere um vertice no grafo
 /// @param g O grafo
-/// @param idTexto O id do vertice
+/// @param idTexto O nome(id) do vertice
 /// @param x A coordenada x do vertice
 /// @param y Acoordenada y do vertice
-void inserir_vertice(Grafo g, int idTexto, double x, double y);
+void inserir_vertice(Grafo g, char* idTexto, double x, double y);
 
 /// @brief Insere uma aresta no grafo
 /// @param g O grafo
@@ -35,16 +35,18 @@ void inserir_aresta(Grafo g, char* origem, char* destino, char* ldir, char*lesq,
 /// @param origem Posicao do vertice de origem na losta de vertices do grafo
 /// @param destino Posicao do vertice de destino na lista de vertices do grafo
 /// @param svg Ponteiro para o arquivo svg que sera impresso o percurso
+/// @param cc Cor que sera pintadas as arestas
 /// @param txt Ponteiro para o arquivo com as intrucoes do percurso
-void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg, FILE* txt);
+void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg,char* cc, FILE* txt);
 
 /// @brief Calcula o caminho de menor tempo entre dois pontos
 /// @param g O grafo
 /// @param origem Posicao do vertice de origem na lista de vertices do grafo
 /// @param destino Posicao do vertice de destino na lista de vertices do grafo
 /// @param svg Ponteiro para o arquivo svg que sera impresso o percurso
+/// @param cr Cor que sera pintadas as arestas
 /// @param txt Ponteiro para o arquivo com as intrucoes do percurso
-void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg, FILE* txt);
+void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg,char* cr, FILE* txt);
 
 /// @brief Altera as velocidades medias de todas as arestas dentro de uma bounding box
 /// @param g O grafo

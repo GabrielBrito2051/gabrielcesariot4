@@ -12,7 +12,7 @@
 #define TAM_LINHA 256
 
 void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Quadra* vetQuadras, Hashtable htQuadras){
-    char func[8], reg[4], cep[48], face, id[48], reg2[4], cc[48], cr[48];
+    char func[8], reg[4], cep[48], face, reg2[4], cc[48], cr[48];
     int num;
     double x, y, w, h, vm;
     char* linhaQry = malloc(TAM_LINHA);
@@ -29,6 +29,7 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
             if(buscar_hashtable(htRegs, reg)<0){
                 regist = criar_registrador(cep, face, num, x, y);
                 inserir_hashtable(htRegs, reg, i);
+                vetReg[i] = regist;
                 indice = i;
                 i++;
             }else{
@@ -60,10 +61,16 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
             indice2 = buscar_hashtable(htRegs, reg2);
             int origem = encontra_vertice_mais_proximo(g,getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]));
             int destino = encontra_vertice_mais_proximo(g, getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
-            busca_menor_distancia(g, origem, destino, svgQry, txt);
-            busca_menor_tempo(g, origem, destino, svgQry, txt);
+            busca_menor_distancia(g, origem, destino, svgQry,cc, txt);
+            busca_menor_tempo(g, origem, destino, svgQry,cr, txt);
         }else{
             printf("Comando nao identificado!");
+        }
+    }
+    destruir_hashtable(htRegs);
+    for(int j=0;j<11;j++){
+        if(vetReg[i]!=NULL){
+            free(vetReg[i]);
         }
     }
 }
