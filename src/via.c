@@ -12,9 +12,10 @@ Grafo leVia(FILE* via){
     char id[48], ldir[24], lesq[24], func[4], i[48], j[48];
     double x, y, cmp, vm;
     char* linhaVia = malloc(TAM_LINHA);
+    int linha=1;
     while(fgets(linhaVia, TAM_LINHA, via)!=NULL){
         sscanf(linhaVia, "%s", func);
-        if(strcmp(func, "nv")==0){
+        if(linha==1){
             sscanf(linhaVia, "%d", &nv);
             g = criar_grafo(nv);
         }
@@ -29,6 +30,7 @@ Grafo leVia(FILE* via){
         }else{
             printf("Comando nao identificado");
         }
+        linha++;
     }
     return g;
 }
