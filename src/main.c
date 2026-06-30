@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
 
     Grafo g = leVia(via);
 
-    Registrador vetReg[11];
+    Registrador vetReg[11] = {NULL};
 
     if (qry != NULL && svgQry != NULL && txt != NULL) {
         start_svg(svgQry, max_x, max_y);
@@ -176,6 +176,8 @@ int main(int argc, char* argv[]) {
     for(int i=0;i<nQuadras;i++){
         liberar_quadra(vetQuadra[i]);
     }
+    free(e);
+    destruir_grafo(g);
 
     return 0;
 }

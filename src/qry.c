@@ -74,9 +74,7 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
     }
     destruir_hashtable(htRegs);
     for(int j=0;j<11;j++){
-        if(vetReg[j]!=NULL){
-            free(vetReg[j]);
-        }
+        destruir_registrador(vetReg[j]);
     }
     free(linhaQry);
 }

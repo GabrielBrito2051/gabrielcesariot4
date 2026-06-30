@@ -16,6 +16,7 @@ int leNumeroQuadras(FILE* geo){
         sscanf(linhaGeo, "%s", func);
         if(strcmp(func, "q")==0) nQuadras++;
     }
+    free(linhaGeo);
 
     return nQuadras;
 }

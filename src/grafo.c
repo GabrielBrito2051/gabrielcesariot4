@@ -259,9 +259,9 @@ void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg, char* cr,FIL
         }
     }
     if(tempoAcumulado[destino] == FLT_MAX){
-        printf("Nao foi encontrado uma rota\n");
+        fprintf(txt,"Nao foi encontrado uma rota\n");
     }else{
-        printf("Rota de menor tempo encontrada! Instrucoes:\n");
+        fprintf(txt,"Rota de menor tempo encontrada! Instrucoes:\n");
         float minutos = tempoAcumulado[destino] * 60.0;
 
         int* aux = malloc(n*sizeof(int));
