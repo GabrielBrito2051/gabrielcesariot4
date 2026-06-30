@@ -21,6 +21,6 @@ int leNumeroQuadras(FILE* geo);
 /// @param ts Estilo das quadras
 /// @param max_x Maior coordenada x das quadras
 /// @param max_y Maior coordenada y das quadras
-void leGeo(FILE* geo, Hashtable hash_quadras, FILE* svgGeo,Quadra* vetQuadras, Estilo ts, int* max_x, int* max_y);
+void leGeo(FILE* geo, Hashtable hash_quadras, FILE* svgGeo,Quadra* vetQuadras, Estilo ts, double* max_x, double* max_y);
 
 #endif

@@ -20,27 +20,30 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
     Registrador regist;
     int i=0, indice, indice2;
     while(fgets(linhaQry, TAM_LINHA, qry)!=NULL){
+        func[0] = '\0';
         sscanf(linhaQry, "%s", func);
         if(strcmp(func, "@o?")==0){
             sscanf(linhaQry, "%*s %s %s %c %d", reg, cep, &face, &num);
             indice = buscar_hashtable(htQuadras, cep);
-            x = calculaXEndereco(vetQuadras[indice],face, num);
-            y = calculaYEndereco(vetQuadras[indice],face, num);
-            if(buscar_hashtable(htRegs, reg)<0){
-                regist = criar_registrador(cep, face, num, x, y);
-                inserir_hashtable(htRegs, reg, i);
-                vetReg[i] = regist;
-                indice = i;
-                i++;
-            }else{
-                indice = buscar_hashtable(htRegs, reg);
-                setCepRegistrador(vetReg[indice], cep);
-                setFaceRegistrador(vetReg[indice], face);
-                setNumRegistrador(vetReg[indice], num);
-                setXRegistrador(vetReg[indice], x);
-                setYRegistrador(vetReg[indice], y);
-            }
-            print_coordenadas_registrador(txt, x, y, indice);
+            if(indice>=0){
+                x = calculaXEndereco(vetQuadras[indice],face, num);
+                y = calculaYEndereco(vetQuadras[indice],face, num);
+                if(buscar_hashtable(htRegs, reg)<0){
+                    regist = criar_registrador(cep, face, num, x, y);
+                    inserir_hashtable(htRegs, reg, i);
+                    vetReg[i] = regist;
+                    indice = i;
+                    i++;
+                }else{
+                    indice = buscar_hashtable(htRegs, reg);
+                    setCepRegistrador(vetReg[indice], cep);
+                    setFaceRegistrador(vetReg[indice], face);
+                    setNumRegistrador(vetReg[indice], num);
+                    setXRegistrador(vetReg[indice], x);
+                    setYRegistrador(vetReg[indice], y);
+                }
+                print_coordenadas_registrador(txt, x, y, indice);
+            }else printf("CEP '%s' nao encontrado para o registrador '%s'\n", cep, reg);
         }
         else if(strcmp(func, "mvm")==0){
             sscanf(linhaQry, "%*s %lf %lf %lf %lf %lf", &vm, &x, &y, &w, &h);
@@ -59,18 +62,21 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
             sscanf(linhaQry, "%*s %s %s %s %s", reg, reg2, cc, cr);
             indice = buscar_hashtable(htRegs, reg);
             indice2 = buscar_hashtable(htRegs, reg2);
-            int origem = encontra_vertice_mais_proximo(g,getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]));
-            int destino = encontra_vertice_mais_proximo(g, getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
-            busca_menor_distancia(g, origem, destino, svgQry,cc, txt);
-            busca_menor_tempo(g, origem, destino, svgQry,cr, txt);
+            if(indice>=0 && indice2>=0){
+                int origem = encontra_vertice_mais_proximo(g,getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]));
+                int destino = encontra_vertice_mais_proximo(g, getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
+                busca_menor_distancia(g, origem, destino, svgQry,cc, txt);
+                busca_menor_tempo(g, origem, destino, svgQry,cr, txt);
+            }else printf("Registrador nao encontrado\n");
         }else{
-            printf("Comando nao identificado!");
+            printf("Comando nao identificado!\n");
         }
     }
     destruir_hashtable(htRegs);
     for(int j=0;j<11;j++){
-        if(vetReg[i]!=NULL){
-            free(vetReg[i]);
+        if(vetReg[j]!=NULL){
+            free(vetReg[j]);
         }
     }
+    free(linhaQry);
 }

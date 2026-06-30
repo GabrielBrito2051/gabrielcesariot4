@@ -47,7 +47,7 @@ void inserir_hashtable(Hashtable h, char* chave, int valor){
     if(h==NULL || chave==NULL) return;
     hashtable* var = (hashtable*) h;
 
-    unsigned int indice = calcular_hash(h, chave);
+    unsigned int indice = calcular_hash(var, chave);
     int tentativa = 0;
 
     while(var->tabela[indice].ocupado && strcmp(var->tabela[indice].chave, chave) != 0){

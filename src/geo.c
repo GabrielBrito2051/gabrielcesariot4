@@ -20,12 +20,13 @@ int leNumeroQuadras(FILE* geo){
     return nQuadras;
 }
 
-void leGeo(FILE* geo, Hashtable ht, FILE* svgGeo, Quadra* vetQuadras, Estilo ts, int* max_x, int* max_y){
+void leGeo(FILE* geo, Hashtable ht, FILE* svgGeo, Quadra* vetQuadras, Estilo ts, double* max_x, double* max_y){
     char cep[48], sw[8], fill[32], strk[32], func[4];
     double x, y, w, h;
     char* linhaGeo = malloc(TAM_LINHA);
     int i=0;
     while(fgets(linhaGeo, TAM_LINHA, geo)!=NULL){
+        func[0] = '\0';
         sscanf(linhaGeo, "%s", func);
         if(strcmp(func,"q")==0){
             sscanf(linhaGeo, "%*s %s %lf %lf %lf %lf", cep, &x, &y, &w, &h);
@@ -45,4 +46,5 @@ void leGeo(FILE* geo, Hashtable ht, FILE* svgGeo, Quadra* vetQuadras, Estilo ts,
             printf("Comando nao identificado!");
         }
     }
+    free(linhaGeo);
 }

@@ -14,6 +14,7 @@ Grafo leVia(FILE* via){
     char* linhaVia = malloc(TAM_LINHA);
     int linha=1;
     while(fgets(linhaVia, TAM_LINHA, via)!=NULL){
+        func[0] = '\0';
         sscanf(linhaVia, "%s", func);
         if(linha==1){
             sscanf(linhaVia, "%d", &nv);
@@ -32,5 +33,6 @@ Grafo leVia(FILE* via){
         }
         linha++;
     }
+    free(linhaVia);
     return g;
 }
