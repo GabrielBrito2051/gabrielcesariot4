@@ -16,7 +16,7 @@ void insere_quadra_svg(FILE *svg, Quadra q, Estilo e){
 
 void insere_registrador_svg(FILE* svg, double x, double y, int indice){
     fprintf(svg, "<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"%d\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"5,5\" />\n", x, y, x, 15);
-    fprintf(svg, "<text x=\"%lf\" y=\"%d\" font-family=\"Arial\" font-size=\"16\" fill=\"black\">%d</text>\n", x, 14, (indice+1));
+    fprintf(svg, "<text x=\"%lf\" y=\"%d\" font-family=\"Arial\" font-size=\"16\" fill=\"black\">R%d</text>\n", x, 14, (indice+1));
 }
 
 void insere_bounding_box(FILE* svg, double x, double y, double largura, double altura, char* cor){
