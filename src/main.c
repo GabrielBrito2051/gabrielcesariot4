@@ -13,12 +13,12 @@
 void monta_caminho(char* destino, size_t tamanho_max, const char* dir, const char* arquivo) {
     if (strlen(dir) > 0) {
         if (dir[strlen(dir) - 1] == '/') {
-            snprintf(destino, tamanho_max, "%s%s", dir, arquivo);
+            snprintf(destino, tamanho_max, "../%s%s", dir, arquivo);
         } else {
-            snprintf(destino, tamanho_max, "%s/%s", dir, arquivo);
+            snprintf(destino, tamanho_max, "../%s/%s", dir, arquivo);
         }
     } else {
-        snprintf(destino, tamanho_max, "%s", arquivo);
+        snprintf(destino, tamanho_max, "../%s", arquivo);
     }
 }
 

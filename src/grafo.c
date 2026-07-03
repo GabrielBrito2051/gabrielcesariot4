@@ -206,7 +206,7 @@ void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg, char* cc
                 fprintf(txt, "Siga em frente na rua %s\n", proxima_rua);
             }
         }
-        fprintf(txt, "Voce chegou ao seu destino!\tDistancia total:%lf km\n\n",distancia[destino]);
+        fprintf(txt, "Voce chegou ao seu destino!\tDistancia total:%.2lf km\n\n",distancia[destino]);
         free(aux);
         free(caminho);
     }
