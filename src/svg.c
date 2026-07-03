@@ -15,8 +15,8 @@ void insere_quadra_svg(FILE *svg, Quadra q, Estilo e){
 }
 
 void insere_registrador_svg(FILE* svg, double x, double y, int indice){
-    fprintf(svg, "<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"%d\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"5,5\" />\n", x, y, x, 5);
-    fprintf(svg, "<text x=\"%lf\" y=\"%d\" font-family=\"Arial\" font-size=\"16\" fill=\"black\">%d</text>\n", x, 5, (indice-1));
+    fprintf(svg, "<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"%d\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"5,5\" />\n", x, y, x, 15);
+    fprintf(svg, "<text x=\"%lf\" y=\"%d\" font-family=\"Arial\" font-size=\"16\" fill=\"black\">%d</text>\n", x, 14, (indice+1));
 }
 
 void insere_bounding_box(FILE* svg, double x, double y, double largura, double altura, char* cor){
@@ -25,6 +25,13 @@ void insere_bounding_box(FILE* svg, double x, double y, double largura, double a
 
 void insere_aresta_svg(FILE* svg, double xi, double yi, double xf, double yf, char* cor){
     fprintf(svg, "<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"%lf\" stroke=\"%s\" stroke-width=\"8\" />\n", xi, yi, xf, yf, cor);
+}
+
+void insere_inicio_fim_svg(FILE* svg,double xi,double yi,double xf,double yf){
+    fprintf(svg, "<rect style=\"fill:red;fill-opacity:1;stroke:red;stroke-opacity:1\" height=\"25\" width=\"25\" y=\"%lf\" x=\"%lf\" />\n", (yi-12.5), (xi-12.5));
+    fprintf(svg, "<rect style=\"fill:red;fill-opacity:1;stroke:red;stroke-opacity:1\" height=\"25\" width=\"25\" y=\"%lf\" x=\"%lf\" />\n", (yf-12.5), (xf-12.5));
+    fprintf(svg, "<text x=\"%lf\" y=\"%lf\" font-family=\"Arial\" font-size=\"16\" fill=\"white\">%c</text>\n", xi-2, yi+5, 'I');
+    fprintf(svg, "<text x=\"%lf\" y=\"%lf\" font-family=\"Arial\" font-size=\"16\" fill=\"white\">%c</text>\n", xf-2, yf+5, 'F');
 }
 
 void fecha_svg(FILE* svg){

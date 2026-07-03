@@ -42,6 +42,7 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
                     setXRegistrador(vetReg[indice], x);
                     setYRegistrador(vetReg[indice], y);
                 }
+                insere_registrador_svg(svgQry, x, y, indice);
                 print_coordenadas_registrador(txt, x, y, indice);
             }else printf("CEP '%s' nao encontrado para o registrador '%s'\n", cep, reg);
         }
@@ -67,6 +68,7 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
                 int destino = encontra_vertice_mais_proximo(g, getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
                 busca_menor_distancia(g, origem, destino, svgQry,cc, txt);
                 busca_menor_tempo(g, origem, destino, svgQry,cr, txt);
+                insere_inicio_fim_svg(svgQry, getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]),getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
             }else printf("Registrador nao encontrado\n");
         }else{
             printf("Comando nao identificado!\n");
