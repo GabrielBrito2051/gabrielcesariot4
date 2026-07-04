@@ -11,7 +11,7 @@
 
 #define TAM_LINHA 256
 
-void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo direcionado, Registrador* vetReg, Quadra* vetQuadras, Hashtable htQuadras, Grafo naoDirecionado){
+void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo direcionado, Registrador* vetReg, Quadra* vetQuadras, Hashtable htQuadras, Grafo naoDirecionado, Grafo transposto){
     char func[8], reg[4], cep[48], face, reg2[4], cc[48], cr[48];
     int num;
     double x, y, w, h, vm;
@@ -52,12 +52,12 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo direcionado, Registrador* v
         }
         else if(strcmp(func, "regs")==0){
             sscanf(linhaQry, "%*s %lf", &vm);
-            int qntdComp = calcula_componentes_conexos(naoDirecionado, vm, svgQry);
+            int qntdComp = calcula_componentes_conexos(direcionado, transposto, vm, svgQry);
             print_numero_componentes(txt, qntdComp);
         }
         else if(strcmp(func, "exp")==0){
             sscanf(linhaQry, "%*s %lf", &vm);
-            calcula_arvore_geradora_minima(direcionado, vm, svgQry);
+            calcula_arvore_geradora_minima(naoDirecionado, vm, svgQry);
         }
         else if(strcmp(func, "p?")==0){
             sscanf(linhaQry, "%*s %s %s %s %s", reg, reg2, cc, cr);

@@ -151,14 +151,22 @@ int main(int argc, char* argv[]) {
     leGeo(geo, htQuadras, svgGeo, vetQuadra, e, &max_x, &max_y);
     fecha_svg(svgGeo);
 
-    Grafo naoDirecionado = NULL;
-    Grafo direcionado = leVia(via, naoDirecionado);
+    int nv;
+    char* linha = malloc(256);
+    fgets(linha, 256, via);
+    sscanf(linha, "%d", &nv);
+    free(linha);
+    Grafo naoDirecionado = criar_grafo(2*nv);
+    Grafo transposto = criar_grafo(nv);
+    Grafo direcionado = criar_grafo(nv);
+
+    leVia(via, direcionado, naoDirecionado, transposto);
 
     Registrador vetReg[11] = {NULL};
 
     if (qry != NULL && svgQry != NULL && txt != NULL) {
         start_svg(svgQry, max_x, max_y);
-        leQry(qry, txt, svgQry, direcionado, vetReg, vetQuadra, htQuadras, naoDirecionado);
+        leQry(qry, txt, svgQry, direcionado, vetReg, vetQuadra, htQuadras, naoDirecionado, transposto);
         for(int i=0;i<nQuadras;i++){
             insere_quadra_svg(svgQry, vetQuadra[i], e);
         }
@@ -180,6 +188,7 @@ int main(int argc, char* argv[]) {
     free(e);
     destruir_grafo(direcionado);
     destruir_grafo(naoDirecionado);
+    destruir_grafo(transposto);
 
     return 0;
 }

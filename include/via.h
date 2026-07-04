@@ -10,8 +10,9 @@
 
 /// @brief Faz a leitura do arquivo .via
 /// @param via Ponteiro para o arquivo .via
+/// @param original Grafo original
 /// @param naoDirecionado Copia do grafo, porem nao direcionado
-/// @return Retorna o grafo criado com os vertices e arestas lidos
-Grafo leVia(FILE* via, Grafo naoDirecionado);
+/// @param transposto Copia do grafo porem com o sentido invertido
+void leVia(FILE* via,Grafo original, Grafo naoDirecionado, Grafo transposto);
 
 #endif

@@ -60,6 +60,46 @@ char* buscar_nome_rua(grafo* g, int origem, int destino){
     return "Rua sem nome";
 }
 
+void empilha_grafo(Grafo g, int vertice, int* visitados, int* pilha, int* topo, double velocidade){
+    visitados[vertice] = 1;
+    grafo* var = (grafo*) g;
+    aresta* rua = var->v[vertice].inicio;
+
+    while(rua!=NULL){
+        if(rua->vm<velocidade){
+            int vizinho = buscar_hashtable(var->mapaIds, rua->destino);
+            if(vizinho!=-1 && !visitados[vizinho]){
+                empilha_grafo(var, vizinho, visitados, pilha, topo, velocidade);
+            }
+        }
+        rua = rua->prox;
+    }
+    pilha[(*topo)++] = vertice;
+}
+
+void desempilha_grafo(Grafo gTransposto, int vertice, int* visitados, double velocidade, double* min_x, double* max_x, double* min_y, double* max_y){
+    grafo* transposto = (grafo*) gTransposto;
+    visitados[vertice] = 1;
+
+    double vx = transposto->v[vertice].x;
+    double vy = transposto->v[vertice].y;
+    if (vx < *min_x) *min_x = vx;
+    if (vx > *max_x) *max_x = vx;
+    if (vy < *min_y) *min_y = vy;
+    if (vy > *max_y) *max_y = vy;
+
+    aresta* rua = transposto->v[vertice].inicio;
+    while(rua!=NULL){
+        if(rua->vm<velocidade){
+            int vizinho = buscar_hashtable(transposto->mapaIds, rua->destino);
+            if(vizinho!=-1 && !visitados[vizinho]){
+                desempilha_grafo(transposto, vizinho, visitados, velocidade, min_x, max_x, min_y, max_y);
+            }
+        }
+        rua = rua->prox;
+    }
+}
+
 Grafo criar_grafo(int numVertices){
     grafo* g = malloc(sizeof(grafo));
     if(g==NULL){
@@ -331,66 +371,50 @@ void alterar_velocidade_media(Grafo g, double x, double y, double w, double h, d
     }
 }
 
-int calcula_componentes_conexos(Grafo g, double velocidade, FILE* svg){
-    if(g==NULL) return -1;
-    grafo* var = (grafo*)g;
+int calcula_componentes_conexos(Grafo gOriginal, Grafo gTransposto, double velocidade, FILE* svg){
+    if(gOriginal==NULL) return -1;
+    grafo* original = (grafo*)gOriginal;
+    grafo* transposto = (grafo*) gTransposto;
 
-    int n = var->qntdAtual;
-    int* visitado = calloc(n,sizeof(int));
-    int* fila = malloc(n*sizeof(int));
+    int n = original->qntdAtual;
+    int* visitados = calloc(n, sizeof(int));
+    int* pilha = malloc(n * sizeof(int));
+    int topo = 0;
     int qntdComp = 0;
 
     char* cores[] = {"red", "cyan", "green", "orange", "purple",  "cyan", "magenta", "brown", "darkgreen", "teal"};
     int totalCores = 10;
 
     for(int i=0;i<n;i++){
-        if(!visitado[i]){
+        if(!visitados[i]){
+            empilha_grafo(original, i, visitados, pilha, &topo, velocidade);
+        }
+    }
+
+    for(int i=0;i<n;i++) visitados[i]=0;
+
+    while(topo>0){
+        int v = pilha[--topo];
+        if(!visitados[v]){
             qntdComp++;
+            double min_x = DBL_MAX, max_x = -DBL_MAX;
+            double min_y = DBL_MAX, max_y = -DBL_MAX;
+            desempilha_grafo(transposto, v, visitados, velocidade, &min_x, &max_x, &min_y, &max_y);
+            double largura = max_x - min_x;
+            double altura = max_y - min_y;
 
-            double min_x = DBL_MAX, max_x = -DBL_MAX, min_y = DBL_MAX, max_y = -DBL_MAX;
-            int inicio = 0;
-            int fim = 0;
+            if (largura == 0) largura = 5.0; 
+            if (altura == 0) altura = 5.0;
 
-            fila[fim++] = i;
-            visitado[i] = 1;
-
-            while(inicio<fim){
-                int u = fila[inicio++];
-
-                double vx = var->v[u].x;
-                double vy = var->v[u].y;
-                if (vx < min_x) min_x = vx;
-                if (vx > max_x) max_x = vx;
-                if (vy < min_y) min_y = vy;
-                if (vy > max_y) max_y = vy;
-
-                aresta* rua = var->v[u].inicio;
-                while(rua!=NULL){
-                    if(rua->vm<velocidade){
-                        int v = buscar_hashtable(var->mapaIds, rua->destino);
-                        if(!visitado[v]){
-                            visitado[v] = 1;
-                            fila[fim++] = v;
-                        }
-                    }
-                    rua = rua->prox;
-                }
-            }
-            if (min_x != DBL_MAX) {
-                double largura = max_x - min_x;
-                double altura = max_y - min_y;
-
-                if (largura == 0) largura = 5.0; 
-                if (altura == 0) altura = 5.0;
-
+            if(largura>0 && altura>0){
                 char* cor = cores[(qntdComp-1)%totalCores];
                 insere_bounding_box(svg, min_x, min_y, largura, altura, cor);
             }
         }
     }
+    free(visitados);
+    free(pilha);
 
-    free(fila);
-    free(visitado);
     return qntdComp;
 }
 

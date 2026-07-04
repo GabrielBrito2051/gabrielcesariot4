@@ -58,11 +58,12 @@ void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg,char* cr, FIL
 void alterar_velocidade_media(Grafo g, double x, double y, double w, double h, double vm);
 
 /// @brief Calcula os componentes conexos do grafo
-/// @param g O grafo
+/// @param gOriginal O grafo original
+/// @param gTransposto O grafo transposto
 /// @param velocidade A velocidade maxima dos componentes
 /// @param svg Ponteiro para o arquivo svg para imprimir a bounding box
 /// @return Retorna a quantidade de elementos conexos. Retorna -1 em caso de erro
-int calcula_componentes_conexos(Grafo g, double velocidade, FILE* svg);
+int calcula_componentes_conexos(Grafo gOriginal, Grafo gTransposto, double velocidade, FILE* svg);
 
 /// @brief Calcula a arvore geradora minima, seleciona as arestas com menor velocidade media e aumenta sua velocidade em 50%
 /// @param g O grafo

@@ -20,6 +20,7 @@
 /// @param vetQuadras Vetor que armzena as quadras
 /// @param htQuadras Hashtable de quadras
 /// @param naoDirecionado Grafo nao direcionado "identico" ao grafo original
-void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Quadra* vetQuadras, Hashtable htQuadras, Grafo naoDirecionado);
+/// @param transposto Grafo com as direcoes invertidas ao do original
+void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Quadra* vetQuadras, Hashtable htQuadras, Grafo naoDirecionado, Grafo transposto);
 
 #endif
