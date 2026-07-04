@@ -11,7 +11,7 @@
 
 #define TAM_LINHA 256
 
-void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Quadra* vetQuadras, Hashtable htQuadras){
+void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo direcionado, Registrador* vetReg, Quadra* vetQuadras, Hashtable htQuadras, Grafo naoDirecionado){
     char func[8], reg[4], cep[48], face, reg2[4], cc[48], cr[48];
     int num;
     double x, y, w, h, vm;
@@ -48,26 +48,26 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo g, Registrador* vetReg, Qua
         }
         else if(strcmp(func, "mvm")==0){
             sscanf(linhaQry, "%*s %lf %lf %lf %lf %lf", &vm, &x, &y, &w, &h);
-            alterar_velocidade_media(g, x, y, w, h, vm);
+            alterar_velocidade_media(direcionado, x, y, w, h, vm);
         }
         else if(strcmp(func, "regs")==0){
             sscanf(linhaQry, "%*s %lf", &vm);
-            int qntdComp = calcula_componentes_conexos(g, vm, svgQry);
+            int qntdComp = calcula_componentes_conexos(naoDirecionado, vm, svgQry);
             print_numero_componentes(txt, qntdComp);
         }
         else if(strcmp(func, "exp")==0){
             sscanf(linhaQry, "%*s %lf", &vm);
-            calcula_arvore_geradora_minima(g, vm, svgQry);
+            calcula_arvore_geradora_minima(direcionado, vm, svgQry);
         }
         else if(strcmp(func, "p?")==0){
             sscanf(linhaQry, "%*s %s %s %s %s", reg, reg2, cc, cr);
             indice = buscar_hashtable(htRegs, reg);
             indice2 = buscar_hashtable(htRegs, reg2);
             if(indice>=0 && indice2>=0){
-                int origem = encontra_vertice_mais_proximo(g,getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]));
-                int destino = encontra_vertice_mais_proximo(g, getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
-                busca_menor_distancia(g, origem, destino, svgQry,cc, txt);
-                busca_menor_tempo(g, origem, destino, svgQry,cr, txt);
+                int origem = encontra_vertice_mais_proximo(direcionado,getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]));
+                int destino = encontra_vertice_mais_proximo(direcionado, getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
+                busca_menor_distancia(direcionado, origem, destino, svgQry,cc, txt);
+                busca_menor_tempo(direcionado, origem, destino, svgQry,cr, txt);
                 insere_inicio_fim_svg(svgQry, getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]),getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
             }else printf("Registrador nao encontrado\n");
         }else{

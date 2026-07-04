@@ -20,7 +20,7 @@ void insere_registrador_svg(FILE* svg, double x, double y, int indice){
 }
 
 void insere_bounding_box(FILE* svg, double x, double y, double largura, double altura, char* cor){
-    fprintf(svg, "<rect style=\"fill:%s;fill-opacity:0.5;stroke:\"red\";stroke-opacity:0.5\" height=\"%lf\" width=\"%lf\" y=\"%lf\" x=\"%lf\" />\n",cor, altura, largura, y, x);
+    fprintf(svg, "<rect style=\"fill:%s;fill-opacity:0.5;stroke:red;stroke-opacity:0.5\" height=\"%lf\" width=\"%lf\" y=\"%lf\" x=\"%lf\" />\n", cor, altura, largura, y, x);
 }
 
 void insere_aresta_svg(FILE* svg, double xi, double yi, double xf, double yf, char* cor){
@@ -30,8 +30,8 @@ void insere_aresta_svg(FILE* svg, double xi, double yi, double xf, double yf, ch
 void insere_inicio_fim_svg(FILE* svg,double xi,double yi,double xf,double yf){
     fprintf(svg, "<rect style=\"fill:red;fill-opacity:1;stroke:red;stroke-opacity:1\" height=\"25\" width=\"25\" y=\"%lf\" x=\"%lf\" />\n", (yi-12.5), (xi-12.5));
     fprintf(svg, "<rect style=\"fill:red;fill-opacity:1;stroke:red;stroke-opacity:1\" height=\"25\" width=\"25\" y=\"%lf\" x=\"%lf\" />\n", (yf-12.5), (xf-12.5));
-    fprintf(svg, "<text x=\"%lf\" y=\"%lf\" font-family=\"Arial\" font-size=\"16\" fill=\"white\">%c</text>\n", xi-2, yi+5, 'I');
-    fprintf(svg, "<text x=\"%lf\" y=\"%lf\" font-family=\"Arial\" font-size=\"16\" fill=\"white\">%c</text>\n", xf-2, yf+5, 'F');
+    fprintf(svg, "<text x=\"%lf\" y=\"%lf\" font-family=\"Arial\" font-size=\"20\" font-weight=\"bold\" fill=\"white\">%c</text>\n", xi-2, yi+5, 'I');
+    fprintf(svg, "<text x=\"%lf\" y=\"%lf\" font-family=\"Arial\" font-size=\"20\" font-weight=\"bold\" fill=\"white\">%c</text>\n", xf-2, yf+5, 'F');
 }
 
 void fecha_svg(FILE* svg){

@@ -6,7 +6,7 @@
 
 #define TAM_LINHA 256
 
-Grafo leVia(FILE* via){
+Grafo leVia(FILE* via, Grafo naoDirecionado){
     Grafo g;
     int nv;
     char id[48], ldir[24], lesq[24], func[4], i[48], j[48];
@@ -19,15 +19,18 @@ Grafo leVia(FILE* via){
         if(linha==1){
             sscanf(linhaVia, "%d", &nv);
             g = criar_grafo(nv);
+            naoDirecionado = criar_grafo(2*nv);
         }
         else if(strcmp(func, "v")==0){
             sscanf(linhaVia, "%*s %s %lf %lf", id, &x, &y);
             inserir_vertice(g, id, x, y);
+            inserir_vertice(naoDirecionado, id, x, y);
         }
         else if(strcmp(func, "e")==0){
             sscanf(linhaVia, "%*s %s %s %s %s %lf %lf %s", i, j, ldir, lesq, &cmp, &vm, id);
             inserir_aresta(g, i, j, ldir, lesq, cmp, vm, id);
-            inserir_aresta(g, j, i, ldir,lesq, cmp, vm, id);
+            inserir_aresta(naoDirecionado, i, j, ldir, lesq, cmp, vm, id);
+            inserir_aresta(naoDirecionado, j, i, ldir, lesq, cmp, vm, id);
         }else{
             printf("Comando nao identificado");
         }

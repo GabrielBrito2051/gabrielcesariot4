@@ -151,13 +151,14 @@ int main(int argc, char* argv[]) {
     leGeo(geo, htQuadras, svgGeo, vetQuadra, e, &max_x, &max_y);
     fecha_svg(svgGeo);
 
-    Grafo g = leVia(via);
+    Grafo naoDirecionado = NULL;
+    Grafo direcionado = leVia(via, naoDirecionado);
 
     Registrador vetReg[11] = {NULL};
 
     if (qry != NULL && svgQry != NULL && txt != NULL) {
         start_svg(svgQry, max_x, max_y);
-        leQry(qry, txt, svgQry, g, vetReg, vetQuadra, htQuadras);
+        leQry(qry, txt, svgQry, direcionado, vetReg, vetQuadra, htQuadras, naoDirecionado);
         for(int i=0;i<nQuadras;i++){
             insere_quadra_svg(svgQry, vetQuadra[i], e);
         }
@@ -177,7 +178,8 @@ int main(int argc, char* argv[]) {
         liberar_quadra(vetQuadra[i]);
     }
     free(e);
-    destruir_grafo(g);
+    destruir_grafo(direcionado);
+    destruir_grafo(naoDirecionado);
 
     return 0;
 }

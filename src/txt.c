@@ -4,7 +4,7 @@
 #include "../include/txt.h"
 
 void print_coordenadas_registrador(FILE* txt, double x, double y, int indice){
-    fprintf(txt, "Coordenada (%lf,%lf) salva no registrador %d\n", x, y, (indice-1));
+    fprintf(txt, "Coordenada (%lf,%lf) salva no registrador R%d\n", x, y, (indice+1));
 }
 
 void print_numero_componentes(FILE* txt, int numero){
