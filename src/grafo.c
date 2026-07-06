@@ -227,6 +227,12 @@ void busca_menor_distancia(Grafo g, int origem, int destino, FILE* svg, char* cc
             caminho[i] = aux[cont-1-i];
         }
 
+        iniciar_percurso_objeto(svg, 2, var->v[caminho[0]].x, var->v[caminho[0]].y);
+        for(int i=1;i<cont;i++){
+            adicionar_no_percurso(svg, var->v[caminho[i]].x, var->v[caminho[i]].y);
+        }
+        finalizar_percurso_objeto(svg, 2);
+
         char* rua_inicial = buscar_nome_rua(var, caminho[0], caminho[1]);
         fprintf(txt, "Siga pela rua %s", rua_inicial);
         for(int i=0;i<cont-2;i++){
@@ -320,6 +326,12 @@ void busca_menor_tempo(Grafo g, int origem, int destino, FILE* svg, char* cr,FIL
         for(int i=0;i<cont;i++){
             caminho[i] = aux[cont-1-i];
         }
+
+        iniciar_percurso_objeto(svg, 1, var->v[caminho[0]].x, var->v[caminho[0]].y);
+        for(int i=1;i<cont;i++){
+            adicionar_no_percurso(svg, var->v[caminho[i]].x, var->v[caminho[i]].y);
+        }
+        finalizar_percurso_objeto(svg, 1);
 
         char* rua_inicial = buscar_nome_rua(var, caminho[0], caminho[1]);
         fprintf(txt, "Siga pela rua %s", rua_inicial);

@@ -68,13 +68,8 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo direcionado, Registrador* v
             if(indice>=0 && indice2>=0){
                 int origem = encontra_vertice_mais_proximo(direcionado,getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]));
                 int destino = encontra_vertice_mais_proximo(direcionado, getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
-
-                iniciar_percurso_objeto(svgQry, 1, getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]));
                 busca_menor_distancia(direcionado, origem, destino, svgQry,cc, txt);
-                finalizar_percurso_objeto(svgQry, 1);
-                iniciar_percurso_objeto(svgQry, 2, getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
                 busca_menor_tempo(direcionado, origem, destino, svgQry,cr, txt);
-                finalizar_percurso_objeto(svgQry, 2);
                 insere_inicio_fim_svg(svgQry, getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]),getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
             }else printf("Registrador nao encontrado\n");
         }else{

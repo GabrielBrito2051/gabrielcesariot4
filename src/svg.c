@@ -44,8 +44,8 @@ void adicionar_no_percurso(FILE* svg, int x, int y) {
 
 void finalizar_percurso_objeto(FILE* svg, int idPercurso) {
     fprintf(svg, "\" />\n");
-    fprintf(svg, "  <circle r=\"5\" fill=\"white\">\n");
-    fprintf(svg, "    <animateMotion dur=\"30\" repeatCount=\"indefinite\" rotate=\"auto\">\n");
+    fprintf(svg, "  <circle r=\"8\" fill=\"#c1c1c1\">\n");
+    fprintf(svg, "    <animateMotion dur=\"5s\" repeatCount=\"indefinite\" rotate=\"auto\">\n");
     fprintf(svg, "      <mpath href=\"#trilho_%d\"/>\n", idPercurso);
     fprintf(svg, "    </animateMotion>\n");
     fprintf(svg, "  </circle>\n");
