@@ -49,6 +49,8 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo direcionado, Registrador* v
         else if(strcmp(func, "mvm")==0){
             sscanf(linhaQry, "%*s %lf %lf %lf %lf %lf", &vm, &x, &y, &w, &h);
             alterar_velocidade_media(direcionado, x, y, w, h, vm);
+            alterar_velocidade_media(naoDirecionado, x, y, w, h, vm);
+            alterar_velocidade_media(transposto, x, y, w, h, vm);
         }
         else if(strcmp(func, "regs")==0){
             sscanf(linhaQry, "%*s %lf", &vm);
@@ -66,8 +68,13 @@ void leQry(FILE* qry, FILE* txt, FILE* svgQry, Grafo direcionado, Registrador* v
             if(indice>=0 && indice2>=0){
                 int origem = encontra_vertice_mais_proximo(direcionado,getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]));
                 int destino = encontra_vertice_mais_proximo(direcionado, getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
+
+                iniciar_percurso_objeto(svgQry, 1, getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]));
                 busca_menor_distancia(direcionado, origem, destino, svgQry,cc, txt);
+                finalizar_percurso_objeto(svgQry, 1);
+                iniciar_percurso_objeto(svgQry, 2, getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
                 busca_menor_tempo(direcionado, origem, destino, svgQry,cr, txt);
+                finalizar_percurso_objeto(svgQry, 2);
                 insere_inicio_fim_svg(svgQry, getXRegistrador(vetReg[indice]), getYRegistrador(vetReg[indice]),getXRegistrador(vetReg[indice2]), getYRegistrador(vetReg[indice2]));
             }else printf("Registrador nao encontrado\n");
         }else{

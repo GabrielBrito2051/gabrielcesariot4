@@ -34,6 +34,23 @@ void insere_inicio_fim_svg(FILE* svg,double xi,double yi,double xf,double yf){
     fprintf(svg, "<text x=\"%lf\" y=\"%lf\" font-family=\"Arial\" font-size=\"20\" font-weight=\"bold\" fill=\"white\">%c</text>\n", xf-2, yf+5, 'F');
 }
 
+void iniciar_percurso_objeto(FILE* svg, int idPercurso, int x, int y) {
+    fprintf(svg, "  <path id=\"trilho_%d\" fill=\"none\" stroke=\"none\" d=\"M %d %d", idPercurso, x, y);
+}
+
+void adicionar_no_percurso(FILE* svg, int x, int y) {
+    fprintf(svg, " L %d %d", x, y);
+}
+
+void finalizar_percurso_objeto(FILE* svg, int idPercurso) {
+    fprintf(svg, "\" />\n");
+    fprintf(svg, "  <circle r=\"5\" fill=\"white\">\n");
+    fprintf(svg, "    <animateMotion dur=\"30\" repeatCount=\"indefinite\" rotate=\"auto\">\n");
+    fprintf(svg, "      <mpath href=\"#trilho_%d\"/>\n", idPercurso);
+    fprintf(svg, "    </animateMotion>\n");
+    fprintf(svg, "  </circle>\n");
+}
+
 void fecha_svg(FILE* svg){
     fprintf(svg,"</svg>\n");
 }

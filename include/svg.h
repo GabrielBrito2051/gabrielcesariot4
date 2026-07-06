@@ -52,6 +52,24 @@ void insere_aresta_svg(FILE* svg, double xi, double yi, double xf, double yf, ch
 /// @param yf Coordenada y de fim do endereco
 void insere_inicio_fim_svg(FILE* svg,double xi,double yi,double xf,double yf);
 
+/// @brief Inicia o percurso animado
+/// @param svg O arquivo svg
+/// @param idPercurso Id do percurso
+/// @param x A coordenada x inicial
+/// @param y A coordenada y inicial
+void iniciar_percurso_objeto(FILE* svg, int idPercurso, int x, int y);
+
+/// @brief Adiciona o proximo vertice no percurso
+/// @param svg Ponteiro para o arquivo svg
+/// @param x A coordenada x do vertice
+/// @param y A coordenada y do vertice
+void adicionar_no_percurso(FILE* svg, int x, int y);
+
+/// @brief Insere a tag para finalizar o percuso animado
+/// @param svg Ponteiro para o arquivo svg
+/// @param duracao Duracao da animacao
+void finalizar_percurso_objeto(FILE* svg, int idPercurso);
+
 /// @brief Insere a tag final no arquivo sg
 /// @param svg Ponteiro para o arquivo svg
 void fecha_svg(FILE* svg);

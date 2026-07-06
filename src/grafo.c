@@ -382,7 +382,7 @@ int calcula_componentes_conexos(Grafo gOriginal, Grafo gTransposto, double veloc
     int topo = 0;
     int qntdComp = 0;
 
-    char* cores[] = {"red", "cyan", "green", "orange", "purple",  "cyan", "magenta", "brown", "darkgreen", "teal"};
+    char* cores[] = {"red", "cyan", "green", "orange", "purple",  "yellow", "magenta", "brown", "darkgreen", "teal"};
     int totalCores = 10;
 
     for(int i=0;i<n;i++){
