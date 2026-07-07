@@ -10,8 +10,10 @@
 
 /// @brief Le a quantidade total de quadras do arquivo geo
 /// @param geo Ponteiro para o arquivo geo
+/// @param max_x Maior coordenada x das quadras
+/// @param max_y Maior coordenada y das quadras
 /// @return Retorna a quantidade de qudras no arquivo
-int leNumeroQuadras(FILE* geo);
+int leNumeroQuadras(FILE* geo, double* max_x, double* man_y);
 
 /// @brief Faz a leitura do arquivo .geo
 /// @param geo Ponteiro para o arquivo geo
@@ -19,8 +21,6 @@ int leNumeroQuadras(FILE* geo);
 /// @param svgGeo Ponteiro para o arquivo svgGeo 
 /// @param vetQuadras Vetor que armazena as quadras
 /// @param ts Estilo das quadras
-/// @param max_x Maior coordenada x das quadras
-/// @param max_y Maior coordenada y das quadras
-void leGeo(FILE* geo, Hashtable hash_quadras, FILE* svgGeo,Quadra* vetQuadras, Estilo ts, double* max_x, double* max_y);
+void leGeo(FILE* geo, Hashtable hash_quadras, FILE* svgGeo,Quadra* vetQuadras, Estilo ts);
 
 #endif

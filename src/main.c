@@ -142,13 +142,13 @@ int main(int argc, char* argv[]) {
 
     Estilo e = criar_estilo("1.0px", "green", "yellow");
     double max_x = 0, max_y = 0;
-    int nQuadras = leNumeroQuadras(geo);
+    int nQuadras = leNumeroQuadras(geo, &max_x, &max_y);
     Hashtable htQuadras = criar_hashtable(2*nQuadras);
     Quadra vetQuadra[nQuadras];
 
     start_svg(svgGeo, max_x, max_y);
     rewind(geo);
-    leGeo(geo, htQuadras, svgGeo, vetQuadra, e, &max_x, &max_y);
+    leGeo(geo, htQuadras, svgGeo, vetQuadra, e);
     fecha_svg(svgGeo);
 
     int nv;
