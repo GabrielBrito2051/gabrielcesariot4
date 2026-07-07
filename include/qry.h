@@ -8,7 +8,15 @@
 #include "../include/hashtable.h"
 
 /*
+    Esse modulo cuida da funcao de ler o arquivo de comandos .qry.
 
+    A funcao leQry le as linhas do arquivo .qry e realiza os comandos que sao lidos em cada linha. Para os comandos, sao necessarios
+    dois vetores, um para registradores e um para quadras. Alem disso, tambem sao necessarios tres copias do mesmo grafo para os
+    calculos, sendo um deles o grafo direcionado original, um grafo nao direcionado e um grafo direcionado transposto (inverso) ao
+    original.
+
+    Alem disso, essa funcao tambem insere as informacoes do que esta ocorrendo nos comandos em arquivos de texto e tambem em
+    arquivos .svg.
 */
 
 /// @brief Faz a leitura do arquivo qry

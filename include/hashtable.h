@@ -4,7 +4,17 @@
 typedef void* Hashtable;
 
 /*
+    Uma hashtable e uma estrutura que guarda uma chave (string) e um valor a partir de um hash unico criado a partir da chave. A hashtable
+    guarda sua capacidade maxima, a chave do elemento inserido(48 caracteres max.), e o valor do indice do elemento no vetor.
 
+    Para criar uma hashtable, utiliza-se a funcao criar_hashtable(), que aloca memoria para a estrutura. Para realizar sua criacao, e
+    necessario passar a capacidade maxima como parametro.
+
+    A hashtable possui duas funcoes, inserir e remover um elemento dela. A funcao inserir_hashtable() guarda uma chave junto com seu
+    valor. A funcao buscar_hashtable() faz a busca do elemento baseado na chave passada e retorna o valor que foi passado
+    anteriormente na sua insercao.
+
+    Por ultimo, existe a funcao destruir_hashtable() para liberar a memoria da hashtable.
 */
 
 /// @brief Cria uma nova hashtable

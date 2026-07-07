@@ -4,7 +4,18 @@
 typedef void* Registrador;
 
 /*
+    Um registrador e uma estrutura que armazena um endereco qualquer. Ele conta com variaveis de cep, face, numero e coordenadas
+    x e y.
 
+    O cep tem um tamanho maximo de 48 caracteres e a face e um unico caractere.
+
+    A funcao criar_registrador() aloca memoria para um novo registrador e precisa do cep, face, numero e coordenadas x e y para tal.
+    Os parametros passados ja sao imediatamente gravados no regitrador.
+
+    O registrador possui funcoes getters e setters para cada um desses parametros.
+
+    Para liberar a memoria de registrador, a funcao destruir_registrador() e a escolha correta a se fazer. Ela libera toda a memoria
+    utilizada por um registrador.
 */
 
 /// @brief Cria um novo registrador

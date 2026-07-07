@@ -4,7 +4,7 @@
 #include <string.h>
 
 typedef struct{
-    char chave[50];
+    char chave[48];
     int valor;
     int ocupado;
 }elemento;

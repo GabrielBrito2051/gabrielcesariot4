@@ -2,7 +2,11 @@
 #define txt_h
 
 /*
+    Esse modulo trata de arquivos .txt. Um arquivo .txt e um arquivo de texto que, nesse caso, guarda o log de informacoes dos comandos
+    lidos no arquivo .qry.
 
+    Nesse arquivo, e possivel inserir as coordenadas registradas por um registrador, imprimir o numero de componentes conexos e
+    imprimir as direcos necessarias para realizar o percurso encontrado.
 */
 
 /// @brief Imprime as coordenadas relativas ao endereco obtido pelo registrador

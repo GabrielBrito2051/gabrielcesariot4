@@ -4,7 +4,26 @@
 typedef void* Grafo;
 
 /*
+    Um grafo e uma estrutura de dados que armazena vertices e arestas. O grafo conta com uma lista de vertices e uma hashtable para
+    auxiliar na busca dos vertices da lista. Tambem temos no grafo sua quantidade atual e capacidade maxima. Os vertices do grafo
+    possuem um id, coordenadas x e y e e uma lista de arestas que saem dele. A aresta possui um nome, ceps
+    das quadras esquerda e direita, id do vertice de destino, e valores de valocidade media e comprimento da aresta.
 
+    Os valores maximos do id do vertice e de 48 caracteres. Os valores maximos de todas as strings das arestas sao de 48 caracteres
+    que sao: id, cep das quadras esquerda e direita e id do vertice de destino.
+    
+    Para criar um grafo, utiliza-se a funcao criar_grafo(). Essa funcao aloca memoria para o grafo com base na quantidade total de
+    vertices qu existirao. A criacao de vertices e arestas estao presentes nas funcoes criar_vertice() e criar_aresta(), que alem
+    de criar o elemento, tambem ja insere-o no grafo. A criacao de vertices precisa do id e coordenadas x e y para realizar a criacao.
+    Ja a criacao de arestas, alem de seu id, necessita tambem  do id de origem e destino dos vertices que ela liga, do cep das quadras
+    direita e esquerda e dos valores de sua velocdade media e comprimento.
+
+    O grafo conta com funcoes matematicas para calcular diversas coisas. Sao elas: busca de menor distancia entre dois pontos, busca
+    de menor tempo entre dois pontos, alteracao da velocidade de arestas interiores  uma bounding box, calculo da qunatidade de
+    componentes conexos e arvore gereadora minima, e calculo do vertice mais proximo a um determinado endereco.
+
+    Finalmente, temos tambem a funcao destruir_grafo(), que libera a memoria de todas as estruturas (vertices, arestas e hashtable),
+    alem de si proprio.
 */
 
 /// @brief Cria um novo grafo com um determinado numero de vertices

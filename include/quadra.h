@@ -5,7 +5,23 @@ typedef  void* Quadra;
 typedef void* Estilo;
 
 /*
+    Uma quadra e um espaco que possui variados enderecos dependendo da face e numero. A quadra possui um cep,coordenadas x e y,
+    comprimento e largura.As quadras possuem um estilo, que e utilizado para a impressao delas no arquivo .svg.O estilo guarda as
+    informacoes de sw, fill e strk.
 
+    O cep possui uma quantidade maxima de caracteres, sendo ela 48. O sw possui uma quantidade maxima de caracteres de 8, e o fill e strk
+    uma quantidade maxima de 32 caracteres.
+
+    Para criar uma quadra, utiliza-se a funcao criar_quadra(), que aloca memoria para uma nova quadra. Para criar essa quadra, e
+    necessario informar o cep, coordenadas x e y, largura e comprimento. Para criar um estilo, utiliza-se a funcao criar_estilo(). Que
+    aloca memoria para um novo estilo de texto. Para realizar essa criacao, e necessario informar o sw, fill e strk.
+
+    Para cada um desses objetos descritos, existem funcoes getter e setters para obter e modificar suas informacoes. Alem dessas
+    funcoes, existem funcoes para calcular as coordenadas X e Y de um determinado endereco, utilizando o cep, face e numero da quadra
+    para realizar o calculo.
+
+    Finalmente, para remover uma quadra, utiliza-se a funcao liberar_quadra(), que, como o nome sugere, libera a memoria de uma quadra.
+    Para liberar a memoria do estilo das quadras, utiliza-se a funcao removerEstilo().
 */
 
 /// @brief Cria uma nova quadra

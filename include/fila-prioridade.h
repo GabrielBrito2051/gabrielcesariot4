@@ -4,7 +4,18 @@
 typedef void* Fila;
 
 /*
+    Uma lista de prioridade e uma estrutura de dados que guarda as informacoes em uma determinada ordem a partir da prioridade
+    atribuida ao elemento. A lista guarda seu tamanho atual, sua capacidade maxima e um elemento.
 
+    Para criar uma lista de prioridade, utiliza-se a funcao criar_fila(), que aloca a memoria para uma nova lista a partir da quantidade
+    de elementos que poderao caber nela, passados como parametro.
+
+    A lista possui uma funcao auxiliar que verifica se a lista esta vazia.
+
+    A funcao inserir_fila() insere um elemento na lista de prioridade a partir da prioridade passada por parametro. A funcao
+    remove_minimo() remove o elemento de maior prioridade da lista.
+
+    Por fim, a funcao destruir_fila() libera a memoria alocada da fila.
 */
 
 /// @brief Cria uma nova fila de prioridade

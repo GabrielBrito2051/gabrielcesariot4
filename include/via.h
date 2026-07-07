@@ -5,7 +5,10 @@
 #include "../include/grafo.h"
 
 /*
+    Esse modulo cuida da funcao de ler o arquivo de pessoas .pm.
 
+    A funcao leVia le as linhas do arquivo .via e vai criando e armazenando os objetos de acordo com o que e lido. E necessario que os
+    tres grafos passados como parametro ja estejam inicializados para realizar as insercoes dos vertices e arestas neles.
 */
 
 /// @brief Faz a leitura do arquivo .via

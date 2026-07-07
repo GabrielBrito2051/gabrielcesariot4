@@ -5,7 +5,20 @@
 #include "../include/registrador.h"
 
 /*
+    Esse modulo trata de arquivos .svg. Um arquivo .svg e um arquivo no qual e impresso formas geometricas, formando assim uma
+    ilustracao.
 
+    Para comecar a escrever num arquivo .svg, primeiro e necessario inicializa-lo, utilizando a funcao start_svg().
+
+    Nesse arquivo, e possivel inserir quadras, inserir a coordenada de um registrador, inserir um bounding box para os componentes
+    conexos, inserir as arestas do percurso e MST, inserir 'placas' de inicio e fim do percurso e inserir uma animacao que percorre os
+    caminhos encontrados.
+
+    Para utilizar os percursos animados, primeiro deve-se utilizar a funcao iniciar_percurso_objeto(), que insere a tag de inicio do
+    percurso, em sequencia, chama-se a funcao adicionar_no_percurso() para cada vertice presente no caminho e, por fim, utilizar
+    a funcao finalizar_percurso_objeto() para terminar a tag do percurso.
+
+    Antes de liberar o ponteiro e fechar o arquivo .svg, e necessario chamar a funcao fechaSVG() para inserir a tag final no arquivo. 
 */
 
 /// @brief Adiciona a tag inicial do arquivo svg

@@ -5,7 +5,14 @@
 #include "../include/quadra.h"
 
 /*
+    Esse modulo cuida da funcao de ler um arquivo de quadras .geo.
 
+    A funcao leNumeroQuadras() faz a leitura do arquivo .geo por completo e durante esse processo verifica a quantidade de quadras
+    a, alem disso, tambem verifica quais sao as maiores coordenadas x e y para poder criar o arquivo .svg do tamanho correto. Os
+    parametros utilizados para armazenar essas coordenadas devem ser passado por referencia. A funcao leGeo() le as linhas do 
+    arquivo .geo e vai criando e aramazenando os objetos lidos.
+
+    Alem disso, essa funcao insere os objetos criados num arquivo .svg.
 */
 
 /// @brief Le a quantidade total de quadras do arquivo geo
